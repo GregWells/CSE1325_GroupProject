@@ -1,11 +1,12 @@
 # CSE1325_GroupProject
-## Team name: ??
+## Team name: The Stragglers
 
 Members: 
 * Diya Ranjit
 * Malia Cisneros
 * Mohamed Ba
 * Greg Wells
+* Jared Dake
 
 Project Description:
 
