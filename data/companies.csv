@@ -1,0 +1,43 @@
+#bad=0/good=1, Company_name,logo_filename
+0,AB InBev,"./data/anheuserbusch.png"
+0,Acer
+0,Alibaba
+0,Asus
+0,Carter's | Oshkosh
+0,Check Point Software
+0,Cloudflare
+0,Ecco
+0,Emirates Airlines
+0,Huawei
+0,International Paper
+0,Koch Industries
+0,Lenovo
+0,Mitsubishi Motors
+0,Nature's Sunshine
+0,Qatar Airways
+0,Red Bull
+0,Colgate-Palmolive
+0,Hilton
+0,Hyatt
+0,Intercontinental Hotels
+0,Johnson & Johnson
+0,Kraft Heinz - JBS
+0,Marriott
+0,Mondelez - Nabisco
+0,Philips,"./data/philips.png"
+0,Procter & Gamble
+0,SC Johnson
+1,Activision Blizzard
+1,Airbnb
+1,American Airlines
+1,Bumble
+1,Delta Air Lines
+1,eBay
+1,Electronic Arts
+1,Etsy
+1,Heineken
+1,Krispy Kreme
+1,Netflix
+1,Roku
+1,Spotify
+1,TJ Maxx
