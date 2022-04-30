@@ -11,10 +11,12 @@ public class Display{
 	private  JPanel titlePanel, instructPanel, logoPanel, scorePanel, askPanel;
 	private JButton playButton, exitButton, againButton, startButton, goodButton, badButton, yesButton, noButton;
 	private ImageIcon logoImg;
+	ArrayList<Logo> logos;
 	Person player;
 	int curIndex;
 
 	public Display(){
+		logos = createLogos("companies.csv");
 		player = new Person();
 		curIndex = 0;
 
@@ -95,6 +97,29 @@ public class Display{
 
 		frame.add(titlePanel);
 		frame.setVisible(true);
+	}
+
+	public ArrayList<Logo> createLogos(File f){
+		ArrayList<Logo> list = new ArrayList<Logo>();
+
+		try{
+			File fObj = new File(f);
+			Scanner fIn = new Scanner(fObj);
+
+			while(fIn.hasNextLine()){
+				String in = fIn.nextLine();
+				String[] sp = in.split(",");
+
+				Logo logo = new Logo(sp[0],sp[1],sp[2]);  // bad/good, name, img filename
+				list.add(logo);
+			}
+			fIn.close();
+		}
+
+		catch(Exception e){
+			System.out.println("Logos could not be created because "+e);
+		}
+		return list;
 	}
 
 	public void displayLogo(){
