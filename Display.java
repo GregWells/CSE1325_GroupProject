@@ -14,7 +14,7 @@ public class Display{
 	Person player;
 	int curIndex;
 
-	public Display{
+	public Display(){
 		player = new Person();
 		curIndex = 0;
 
