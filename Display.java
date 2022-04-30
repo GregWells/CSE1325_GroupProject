@@ -1,6 +1,3 @@
-import patronstuff.*;
-import machinestuff.*;
-import infostuff.*;
 import java.io.*;
 import java.util.*;
 import java.lang.NullPointerException;
@@ -10,15 +7,17 @@ import javax.swing.*;
 
 public class Display{
 	private JFrame frame;
-	private JLabel titleLabel, instructLabel, scoreLabel, logoLabel, askLabel;
+	private JLabel titleLabel, instructLabel, scoreLabel, askLabel;
 	private  JPanel titlePanel, instructPanel, logoPanel, scorePanel, askPanel;
 	private JButton playButton, exitButton, againButton, startButton, goodButton, badButton, yesButton, noButton;
-	private JImage logoImg;
-	Player player;
+	private ImageIcon logoImg;
+	ArrayList<Logo> logos;
+	Person player;
 	int curIndex;
 
-	public Display{
-		player = new Player();
+	public Display(){
+		logos = createLogos("companies.csv");
+		player = new Person();
 		curIndex = 0;
 
 		frame = new JFrame("Company Accountability Program for Ukraine");
@@ -34,12 +33,7 @@ public class Display{
 		askPanel = new JPanel();
 
 
-		logoImg = new JImage();
-
-		
-		logoLabel = new JLabel("", JLabel.CENTER);
-		logoLabel.setText("Brand Name");
-		logoLabel.setHorizontalAlignment(JLabel.CENTER);
+		logoImg = new ImageIcon();
 
 		askLabel = new JLabel();
 		askLabel.setText("Do you need the instructions?");
@@ -89,7 +83,6 @@ public class Display{
 		instructPanel.add(instructLabel);
 		instructPanel.add(playButton);
 
-		logoPanel.add(logoLabel);
 		logoPanel.add(logoImg);
 		logoPanel.add(goodButton);
 		logoPanel.add(badButton);
@@ -106,12 +99,34 @@ public class Display{
 		frame.setVisible(true);
 	}
 
+	public ArrayList<Logo> createLogos(File f){
+		ArrayList<Logo> list = new ArrayList<Logo>();
+
+		try{
+			File fObj = new File(f);
+			Scanner fIn = new Scanner(fObj);
+
+			while(fIn.hasNextLine()){
+				String in = fIn.nextLine();
+				String[] sp = in.split(",");
+
+				Logo logo = new Logo(sp[0],sp[1],sp[2]);  // bad/good, name, img filename
+				list.add(logo);
+			}
+			fIn.close();
+		}
+
+		catch(Exception e){
+			System.out.println("Logos could not be created because "+e);
+		}
+		return list;
+	}
+
 	public void displayLogo(){
 		frame.remove(instructPanel);
 		for(int i = 0; i < logos.size();i++){
 			curIndex = i;
-			logoImg = logos.get(i).getImage(); // change image logo
-			logoLabel.setText(logos.get(i).getString()); // change logo name
+			logoImg = logos.get(i).getPic(); // change image logo ; getPic() returns ImageIcon 
 			logoPanel.remove(logoImg); // reset image
 			logoPanel.add(logoImg);
 
@@ -128,7 +143,7 @@ public class Display{
 
 	public void displayScore(){
 		frame.remove(logoPanel);
-		player.finalScore(player.getScore());  // finalizes player score ; need getScore() accessor
+		player.setFinalScore(player.getScore());  // finalizes player score ; need getScore() accessor and setFinalScore() setter
 		scoreLabel.setText("Score: "+player.getScore()+"/"+logos.size());
 		frame.add(scorePanel);
 		frame.setVisible(true);
