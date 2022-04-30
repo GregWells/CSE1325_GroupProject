@@ -25,7 +25,7 @@ public class Program{
 				String in = fIn.nextLine();
 				String[] sp = in.split(",");
 
-				Logo logo = new Logo(sp[0],sp[1],sp[2]);  // bad/good, name, img filename
+				Logo logo = new Logo(Integer.parseInt(sp[0]),sp[1],sp[2]);  // bad/good, name, img filename
 				list.add(logo);
 			}
 			fIn.close();
