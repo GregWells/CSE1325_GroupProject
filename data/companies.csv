@@ -1,11 +1,11 @@
 #bad=0/good=1, Company_name,logo_filename
-0,AB InBev,"./data/anheuserbusch.png"
-0,Acer
-0,Alibaba
-0,Asus
-0,Carter's | Oshkosh
-0,Check Point Software
-0,Cloudflare
+0,AB InBev(Anheuser Busch),"./data/anheuserbusch.png"
+0,Acer,"./data/acer.jpg"
+0,Alibaba"./data/alibaba.jpg"
+0,Asus,"./data/asus.png"
+0,Carter's | Oshkosh,"./data/oshkosh.png"
+0,Check Point Software,"./data/checkpoint.png"
+0,Cloudflare,"cloudflare.png"
 0,Ecco
 0,Emirates Airlines
 0,Huawei
