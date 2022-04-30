@@ -118,7 +118,7 @@ public class Display{
 
 	public void displayScore(){
 		frame.remove(logoPanel);
-		player.finalScore(player.getScore());  // finalizes player score ; need getScore() accessor
+		player.setFinalScore(player.getScore());  // finalizes player score ; need getScore() accessor and setFinalScore() setter
 		scoreLabel.setText("Score: "+player.getScore()+"/"+logos.size());
 		frame.add(scorePanel);
 		frame.setVisible(true);
