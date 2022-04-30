@@ -10,7 +10,7 @@ public class Program{
 	ArrayList<Logo> logos = createLogos("companies.csv");
 
 	public static void main(String[] args){
-		Player p1 = new Player();
+		Person p1 = new Person();
 		Display d1 = new Display(p1);
 	}
 
