@@ -10,7 +10,7 @@ public class Logo{
     { 
         this.good=good; 
         this.companyName=companyName; 
-        this.logoFilename=logoFilename; 		
+        this.logoFilename=logoFilename; 
     } 
  
     public Boolean isGood() 
@@ -29,7 +29,6 @@ public class Logo{
     public String getFilename() 
     { 
         return this.logoFilename; 		
-    } 	
+    }  
 
-	
 } 
