@@ -32,9 +32,7 @@ public class LogoDepot {
 		if (companyFile.length()<1){
 			System.out.println("Company file: " + companyFile+ "is empty or does not exist.");
 		}
-		//System.out.println("Reading in company file: "+companyFile);
-		// create an array of correct size to hold cust list
-		//Logo[] logoList2=new Logo[(int)numLines]; 
+
 		
 		try { 
 			File myObj = new File(companyFile); 
