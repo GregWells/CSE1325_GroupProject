@@ -130,50 +130,7 @@ public class Display{
 		frame.setVisible(true);
 	}
 
-/*
-	public ArrayList<Logo> createLogos(File f){
-		ArrayList<Logo> list = new ArrayList<Logo>();
 
-		try{
-			File fObj = new File(f);
-			Scanner fIn = new Scanner(fObj);
-
-			while(fIn.hasNextLine()){
-				String in = fIn.nextLine();
-				String[] sp = in.split(",");
-
-				Logo logo = new Logo(sp[0],sp[1],sp[2]);  // bad/good, name, img filename
-				list.add(logo);
-			}
-			fIn.close();
-		}
-
-		catch(Exception e){
-			System.out.println("Logos could not be created because "+e);
-		}
-		return list;
-	}
-*/
-
-/*	public void displayLogo(){
-		frame.remove(instructPanel);
-		for(int i = 0; i < logos.size();i++){
-			curIndex = i;
-			logoImg = logos.get(i).getPic(); // change image logo ; getPic() returns ImageIcon 
-			logoPanel.remove(logoImg); // reset image
-			logoPanel.add(logoImg);
-
-			frame.remove(logoPanel);//reset panel
-			frame.add(logoPanel); 
-			frame.setVisible(true);
-			while(curIndex!=i); // waits until player presses a good/bad button to continue
-		}
-
-		frame.remove(logoPanel);
-		frame.add(scorePanel);
-		frame.setVisible(true);
-	}
-*/
   	public void displayLogo(){
 		frame.remove(instructPanel);
 		for(int i = 0; i < loops;i++){
@@ -192,22 +149,38 @@ public class Display{
 			try {
 				File file=new File("images/"+logoFilename);
 				System.out.println("Loading pic:"+file+"  "+ "  filesize:"+file.length());
-				ImageIcon iconLogo = new ImageIcon("images/"+logoFilename);
-				picLabel.setIcon(iconLogo);
+				//ImageIcon iconLogo = new ImageIcon("images/"+logoFilename);
+				//picLabel.setIcon(iconLogo);
+		
+				/////////////////////////////////////////////////////
+				//
+				//    Look here
+				//
+				//ImageIcon icon = new ImageIcon("aa.png");
+				ImageIcon icon = new ImageIcon("images/"+logoFilename);
+				JLabel label = new JLabel(icon);
+				frame.setSize(600,600);
+				frame.add(label);
+				frame.setVisible(true);
+				
+				
+				logoPanel.add(picLabel);
+				logoPanel.remove(picLabel); // reset image
+				logoPanel.add(picLabel);
+
+				frame.remove(logoPanel);//reset panel
+				frame.add(logoPanel); 
+				frame.setVisible(true);
+				while(curIndex!=i); // waits until player presses a good/bad button to continue
+		
+		
 		
 			} catch (Exception e) {
 				System.out.println("Error loading pic"+"images/"+logoFilename);
 				e.getStackTrace();
 			}
 			
-			logoPanel.add(picLabel);
-			logoPanel.remove(picLabel); // reset image
-			logoPanel.add(picLabel);
-
-			frame.remove(logoPanel);//reset panel
-			frame.add(logoPanel); 
-			frame.setVisible(true);
-			while(curIndex!=i); // waits until player presses a good/bad button to continue
+			
 		}
 
 		frame.remove(logoPanel);
