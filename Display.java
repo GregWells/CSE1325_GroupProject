@@ -190,7 +190,8 @@ public class Display{
 			//logoImg = logos.get(i).getPic(); // change image logo ; getPic() returns ImageIcon 
 			
 			try {
-				System.out.println("Loading pic:"+"images/"+logoFilename);
+				File file=new File("images/"+logoFilename);
+				System.out.println("Loading pic:"+file+"  "+ "  filesize:"+file.length());
 				ImageIcon iconLogo = new ImageIcon("images/"+logoFilename);
 				picLabel.setIcon(iconLogo);
 		
