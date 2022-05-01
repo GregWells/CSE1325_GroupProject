@@ -13,9 +13,14 @@ public class Logo{
         this.logoFilename=logoFilename; 		
     } 
  
-    public int isGood() 
+    public Boolean isGood() 
     { 
-        return this.good; 		
+        if (this.good==1){
+			return true; 	
+		}
+		else{
+			return false;
+		}	
     } 
     public String getCompany() 
     { 
@@ -26,4 +31,5 @@ public class Logo{
         return this.logoFilename; 		
     } 	
 
+	
 } 
