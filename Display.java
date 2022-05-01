@@ -20,7 +20,6 @@ public class Display{
 	private JLabel titleLabel, instructLabel, scoreLabel, askLabel, picLabel;
 	private  JPanel titlePanel, instructPanel, logoPanel, scorePanel, askPanel;
 	private JButton playButton, exitButton, againButton, startButton, goodButton, badButton, yesButton, noButton;
-	//private ImageIcon logoImg;
 	
     ///ArrayList<Logo> logos;
 	Person player;
@@ -216,10 +215,7 @@ public class Display{
 	}
 	public void createLogos(Logo []logoList, String fn){
 		//Initialize the logos
-		//Logo[] logoList2=new Logo[maxImages];
-		//LogoDepot ld1= new LogoDepot("Primary",logoList2);
-		
-		//Logo[] logoList=new Logo[maxImages];
+
 		try {
 			Path cfile = Paths.get(companyFile);
 			numLines = Files.lines(cfile).count();
@@ -245,8 +241,7 @@ public class Display{
 				}
 				companyInfo=line.split(",");
 				logoList[index]=new Logo(Integer.parseInt(companyInfo[0]),companyInfo[1],companyInfo[2]);
-				//System.out.println("Company: "+logoList[index].getCompany());
-				//System.out.println("Good: "+logoList[index].isGood());
+
 				index+=1;
 			}
 			logoCount=index;
