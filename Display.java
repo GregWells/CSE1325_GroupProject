@@ -145,62 +145,57 @@ public class Display{
 
   	public void displayLogo(){
 		frame.remove(instructPanel);
-		//frame.setVisible(false);
+		frame.setVisible(false);
 		frame.add(logoPanel);
-		//frame.setVisible(true);
-		
-		for(int i = 0; i < loops;i++){
-			curIndex = i;
-			mouseClicked=false;
-			//int randIndex=getRandomIndex(logoList);
-			int randIndex=getRandomIndex();
-			good=logos[randIndex].isGood();
-			company=logos[randIndex].getCompany();
-			logoFilename=logos[randIndex].getFilename();
-			
-			//icon = new ImageIcon(logoFilename);
-			System.out.println("Next random logo: "+good+"  "+company+"  "+logoFilename);
-			
-			//logoImg = logos.get(i).getPic(); // change image logo ; getPic() returns ImageIcon 
-			
-			try {
-				File file=new File("images/"+logoFilename);
-				System.out.println("Loading pic:"+file+"  "+ "  filesize:"+file.length());
-
-
-				//ImageIcon icon = new ImageIcon("aa.png");
-				String imageName = ("images/"+logoFilename);
-				picLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
-
-				logoPanel.add(picLabel);
-				
-
-				//frame.remove(logoPanel);//reset panel
-				frame.add(logoPanel); 
-				frame.setVisible(true);
-				///icon.getImage().flush();
-		
-		
-			} catch (Exception e) {
-				System.out.println("Error loading pic"+"images/"+logoFilename);
-				e.getStackTrace();
-			}
-			System.out.println("mouseClicked="+mouseClicked); 
-			//while(!mouseClicked); // waits until player presses a good/bad button to continue
-			
-			try {
-				Thread.sleep(200);
-			} catch (InterruptedException e2) {
-				e2.printStackTrace();
-			}
-			mouseClicked=false;	
-			
-		}
-		//frame.setVisible(false);
-		//frame.remove(logoPanel);
-		frame.add(scorePanel);
+		frame.pack();
 		frame.setVisible(true);
+		curIndex+=1;
+		mouseClicked=false;
+		
+		System.out.println("got here:"+curIndex);
+		int randIndex=getRandomIndex();
+		good=logos[randIndex].isGood();
+		company=logos[randIndex].getCompany();
+		logoFilename=logos[randIndex].getFilename();
+		
+		System.out.println(curIndex+"Next random logo: "+good+"  "+company+"  "+logoFilename);			
+		try {
+			File file=new File("images/"+logoFilename);
+			System.out.println("Loading pic:"+file+"  "+ "  filesize:"+file.length());
+
+			String imageName = ("images/"+logoFilename);
+			picLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
+
+			logoPanel.add(picLabel);
+			logoPanel.add(goodButton);
+			logoPanel.add(badButton);
+
+			goodButton.setActionCommand("GOOD");
+			badButton.setActionCommand("BAD");
+			frame.add(logoPanel); 
+			frame.setVisible(true);
+		
+		} 
+		catch (Exception e) {
+			System.out.println("Error loading pic"+"images/"+logoFilename);
+			e.getStackTrace();
+		}
+			
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e2) {
+			e2.printStackTrace();
+		}
+		//mouseClicked=false;	
+			
+	
+	//frame.setVisible(false);
+	//frame.remove(logoPanel);
+	//frame.add(scorePanel);
+	//frame.setVisible(true);
 	}
+	
+	
 	public void createLogos(Logo []logoList, String fn){
 		//Initialize the logos
 
@@ -264,9 +259,9 @@ public class Display{
 	class PlayActionListener implements ActionListener{  // instructions -> logo gameplay
 		public void actionPerformed(ActionEvent a){
 			frame.remove(instructPanel);
-			frame.setVisible(false);
 			frame.add(logoPanel);
 			frame.setVisible(true);
+
 			displayLogo();
 			mouseClicked=true;
 		}
@@ -275,11 +270,12 @@ public class Display{
 
 	class GoodActionListener implements ActionListener{  // checks player choice/assigns points
 		public void actionPerformed(ActionEvent a){
-			//if(logos.get(curIndex).isGood()){              // isGood() returns
+			System.out.println("User pressed GOOD button");
 			if(logos[curIndex].isGood()){              // isGood() returns
-
+				
 				player.correct(); // increment score by 1 in Player class
 			}
+			displayLogo();
 			mouseClicked=true;
 			curIndex++;
 		}
@@ -287,7 +283,9 @@ public class Display{
 
 	class BadActionListener implements ActionListener{  // checks player choice/assigns points
 		public void actionPerformed(ActionEvent a){
+			System.out.println("User pressed BAD button");
 			if(!logos[curIndex].isGood()){
+				System.out.println("GGot here");
 				player.incorrect(); // decrement score by 1 in Player class
 			}
 			mouseClicked=true;
@@ -324,6 +322,7 @@ public class Display{
 			frame.setVisible(false);
 			frame.add(logoPanel);
 			frame.setVisible(true);
+			System.out.println("Got here: NoActionListener");
 			displayLogo();
 		}
 	}
