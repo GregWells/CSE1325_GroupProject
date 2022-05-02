@@ -291,6 +291,7 @@ public class Display{
 				System.out.println("GGot here");
 				player.incorrect(); // decrement score by 1 in Player class
 			}
+			displayLogo();
 			mouseClicked=true;
 			curIndex++;
 		}
