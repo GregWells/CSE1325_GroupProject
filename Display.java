@@ -24,6 +24,7 @@ public class Display{
     ///ArrayList<Logo> logos;
 	Person player;
 	int curIndex;
+	boolean mouseClicked=false;
 	int loops=10;
 	boolean good;
 	int maxImages=50;
@@ -50,7 +51,7 @@ public class Display{
 		frame = new JFrame("Company Accountability Program for Ukraine");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800,800);
-		frame.setLayout(new GridLayout(3,1));
+		frame.setLayout(new GridLayout(2,1));
 
 
 		logoPanel = new JPanel();
@@ -61,10 +62,21 @@ public class Display{
 		
 	
 		// Import ImageIcon   
-		picLabel = new JLabel();		
-		ImageIcon iconLogo = new ImageIcon("images/aa.png");
-		// In init() method write this code
-		picLabel.setIcon(iconLogo);
+		picLabel = new JLabel();	
+		try {
+			String imageName = ( "images/su.png");
+			picLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
+			titlePanel.add(picLabel);
+			frame.add(titlePanel);
+			frame.setVisible(true);			
+			Thread.sleep(1500);
+			titlePanel.remove(picLabel);
+			frame.remove(titlePanel);
+			frame.setVisible(false);		
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}		
+		
 			
 		askLabel = new JLabel();
 		askLabel.setText("Do you need the instructions?");
@@ -133,8 +145,13 @@ public class Display{
 
   	public void displayLogo(){
 		frame.remove(instructPanel);
+		//frame.setVisible(false);
+		frame.add(logoPanel);
+		//frame.setVisible(true);
+		
 		for(int i = 0; i < loops;i++){
 			curIndex = i;
+			mouseClicked=false;
 			//int randIndex=getRandomIndex(logoList);
 			int randIndex=getRandomIndex();
 			good=logos[randIndex].isGood();
@@ -149,41 +166,38 @@ public class Display{
 			try {
 				File file=new File("images/"+logoFilename);
 				System.out.println("Loading pic:"+file+"  "+ "  filesize:"+file.length());
-				//ImageIcon iconLogo = new ImageIcon("images/"+logoFilename);
-				//picLabel.setIcon(iconLogo);
-		
-				/////////////////////////////////////////////////////
-				//
-				//    Look here
-				//
-				//ImageIcon icon = new ImageIcon("aa.png");
-				ImageIcon icon = new ImageIcon("images/"+logoFilename);
-				JLabel label = new JLabel(icon);
-				frame.setSize(600,600);
-				frame.add(label);
-				frame.setVisible(true);
-				
-				
-				logoPanel.add(picLabel);
-				logoPanel.remove(picLabel); // reset image
-				logoPanel.add(picLabel);
 
-				frame.remove(logoPanel);//reset panel
+
+				//ImageIcon icon = new ImageIcon("aa.png");
+				String imageName = ("images/"+logoFilename);
+				picLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
+
+				logoPanel.add(picLabel);
+				
+
+				//frame.remove(logoPanel);//reset panel
 				frame.add(logoPanel); 
 				frame.setVisible(true);
-				while(curIndex!=i); // waits until player presses a good/bad button to continue
-		
+				///icon.getImage().flush();
 		
 		
 			} catch (Exception e) {
 				System.out.println("Error loading pic"+"images/"+logoFilename);
 				e.getStackTrace();
 			}
+			System.out.println("mouseClicked="+mouseClicked); 
+			//while(!mouseClicked); // waits until player presses a good/bad button to continue
 			
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e2) {
+				e2.printStackTrace();
+			}
+			mouseClicked=false;	
 			
 		}
-
-		frame.remove(logoPanel);
+		//frame.setVisible(false);
+		//frame.remove(logoPanel);
 		frame.add(scorePanel);
 		frame.setVisible(true);
 	}
@@ -249,7 +263,12 @@ public class Display{
 
 	class PlayActionListener implements ActionListener{  // instructions -> logo gameplay
 		public void actionPerformed(ActionEvent a){
+			frame.remove(instructPanel);
+			frame.setVisible(false);
+			frame.add(logoPanel);
+			frame.setVisible(true);
 			displayLogo();
+			mouseClicked=true;
 		}
 			
 	}
@@ -261,7 +280,7 @@ public class Display{
 
 				player.correct(); // increment score by 1 in Player class
 			}
-
+			mouseClicked=true;
 			curIndex++;
 		}
 	}
@@ -271,7 +290,7 @@ public class Display{
 			if(!logos[curIndex].isGood()){
 				player.incorrect(); // decrement score by 1 in Player class
 			}
-
+			mouseClicked=true;
 			curIndex++;
 		}
 	}
@@ -301,6 +320,10 @@ public class Display{
 	class NoActionListener implements ActionListener{ // ask screen -> logo gameplay
 		public void actionPerformed(ActionEvent a){
 			frame.remove(askPanel);
+			frame.remove(instructPanel);
+			frame.setVisible(false);
+			frame.add(logoPanel);
+			frame.setVisible(true);
 			displayLogo();
 		}
 	}
