@@ -16,9 +16,9 @@ import java.nio.file.StandardOpenOption;
 import java.util.Random;
 
 public class Display{
-	private JFrame frame, frame2;
+	private JFrame frame, splashframe, frame2;
 	private JLabel titleLabel, instructLabel, scoreLabel, askLabel, picLabel, pic2Label;
-	private  JPanel titlePanel, instructPanel, logoPanel, scorePanel, askPanel, alertPanel;
+	private  JPanel titlePanel, instructPanel, logoPanel, scorePanel, askPanel, alertPanel, splashPanel;
 	private JButton playButton, exitButton, againButton, startButton, goodButton, badButton, yesButton, noButton;
 	
     ///ArrayList<Logo> logos;
@@ -37,51 +37,59 @@ public class Display{
 	double numLines=0;
 	String line;
 	String depotName;
-	//String[] line;
 	String[] companyInfo;
 	int randIndex=0;
 	public Logo logos[] =new Logo[maxImages];
 
 	public Display(Person player){
-		///logos = createLogos("companies.csv");
-		//Logo logos[] =new Logo[maxImages];
+	
 		this.player=player;
 		this.randIndex=randIndex;
+
+ 
+		//Create logo objects from company csv file
 		createLogos(logos,companyFile);
 		
 		curIndex = 0;
-
+		
+		//define frame parameters
 		frame = new JFrame("Company Accountability Program for Ukraine");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1000,1000);
 		frame.setLayout(new GridLayout(1,1));
+		
+		splashframe = new JFrame("Company Accountability Program for Ukraine");
+		splashframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		splashframe.setSize(600,400);
+		splashframe.setLayout(new GridLayout(1,1));
+		
 
-
-		logoPanel = new JPanel();
+		//define panels that will be placed on the frame
 		titlePanel = new JPanel();
 		instructPanel = new JPanel();
+		logoPanel = new JPanel();  
 		scorePanel = new JPanel();
 		askPanel = new JPanel();
 		alertPanel = new JPanel();
-	
-		// Import ImageIcon   
+		splashPanel = new JPanel();
+	  
 		//Show opening splash screen with Ukrainian flag
-		picLabel = new JLabel();	
 		try {
 			String imageName = ( "images/su.png");
+			picLabel = new JLabel();	
 			picLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
-			titlePanel.add(picLabel);
-			frame.add(titlePanel);
-			frame.setVisible(true);			
-			Thread.sleep(1500);
-			titlePanel.remove(picLabel);
-			frame.remove(titlePanel);
-			frame.setVisible(false);		
+			splashPanel.add(picLabel);
+			splashframe.add(splashPanel);
+			splashframe.setVisible(true);			
+			Thread.sleep(2000);
+			splashPanel.remove(picLabel);
+			splashframe.remove(splashPanel);
+			splashframe.setVisible(false);		
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}		
 		
-			
+		//establish the labels and buttons that will be placed on the panels	
 		askLabel = new JLabel();
 		askLabel.setText("Do you need the instructions?");
 		askLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -91,11 +99,11 @@ public class Display{
 		scoreLabel.setText("Score: ");
 
 		titleLabel = new JLabel("", JLabel.CENTER);
-		titleLabel.setText("Title");
+		//titleLabel.setText("Title");  //Not needed 
 		titleLabel.setVerticalAlignment(JLabel.TOP);
 
 		instructLabel = new JLabel();
-		instructLabel.setText("Instructions...");
+		instructLabel.setText("<html>Instructions: <br>This is a<br>multline label<br> </html>");
 		instructLabel.setVerticalAlignment(JLabel.TOP);
 		
 		pic2Label = new JLabel();
@@ -124,6 +132,8 @@ public class Display{
 		noButton = new JButton("No");
 		noButton.addActionListener(new NoActionListener());
 
+
+		//add the buttons and labels to the appropriate panels
 		titlePanel.add(titleLabel);
 		titlePanel.add(startButton);
 		titlePanel.add(exitButton);
@@ -145,8 +155,12 @@ public class Display{
 
 		alertPanel.add(pic2Label);
 
-		frame.add(titlePanel);
+
 		
+		//First get the player's name.  This is a small popup window
+		//The program requires the person object 
+		//to be created first:   Display d1 = new Display(p1);
+		// where p1 is the player object                            
 		String playerName=getName("Name: ");
 		player.setName(playerName);
 		if (playerName.length()<1){
@@ -154,19 +168,22 @@ public class Display{
 		}
 		System.out.println("Player: "+playerName);
 		player.setName(playerName);
+		
+		//Now add the title panel to the frame and make it visible
+		//the title panel contains the start button
+		frame.add(titlePanel);		
 		frame.setVisible(true);
+		
 	}
 
 
   	public void displayLogo(){
 		if (curIndex<loops){ 
-			frame.remove(instructPanel);
+			//frame.remove(instructPanel);  //redundant
 			frame.setVisible(false);
 			frame.add(logoPanel);
-			frame.pack();
-			frame.setVisible(true);
+
 			curIndex+=1;
-			mouseClicked=false;
 			
 			randIndex=getRandomIndex();
 			good=logos[randIndex].isGood();
@@ -188,7 +205,9 @@ public class Display{
 				goodButton.setActionCommand("GOOD");
 				badButton.setActionCommand("BAD");
 				frame.add(logoPanel); 
+				frame.pack();
 				frame.setVisible(true);
+
 			
 			} 
 			catch (Exception e) {
@@ -273,12 +292,12 @@ public class Display{
 
 	class PlayActionListener implements ActionListener{  // instructions -> logo gameplay
 		public void actionPerformed(ActionEvent a){
+			frame.setVisible(false);
 			frame.remove(instructPanel);
-			frame.add(logoPanel);
-			frame.setVisible(true);
+			//frame.add(logoPanel);
+			//frame.setVisible(true);
 
 			displayLogo();
-			mouseClicked=true;
 		}
 			
 	}
