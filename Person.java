@@ -8,7 +8,7 @@ public class Person{
         this.name=name; 	
 		this.score=0;		
     } 
- 
+  
      public String getName() 
     { 
         return this.name; 		
@@ -40,11 +40,13 @@ public class Person{
     } 
 	public void correct() 
     { 
+		System.out.println("Score increment");
 		score+=1;
         return; 		
     } 
 	public void incorrect() 
     { 
+		System.out.println("Score decrement");
 		score-=1;
         return; 		
     } 

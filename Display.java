@@ -16,9 +16,9 @@ import java.nio.file.StandardOpenOption;
 import java.util.Random;
 
 public class Display{
-	private JFrame frame;
-	private JLabel titleLabel, instructLabel, scoreLabel, askLabel, picLabel;
-	private  JPanel titlePanel, instructPanel, logoPanel, scorePanel, askPanel;
+	private JFrame frame, frame2;
+	private JLabel titleLabel, instructLabel, scoreLabel, askLabel, picLabel, pic2Label;
+	private  JPanel titlePanel, instructPanel, logoPanel, scorePanel, askPanel, alertPanel;
 	private JButton playButton, exitButton, againButton, startButton, goodButton, badButton, yesButton, noButton;
 	
     ///ArrayList<Logo> logos;
@@ -54,7 +54,7 @@ public class Display{
 		frame = new JFrame("Company Accountability Program for Ukraine");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1000,1000);
-		frame.setLayout(new GridLayout(2,1));
+		frame.setLayout(new GridLayout(1,1));
 
 
 		logoPanel = new JPanel();
@@ -62,9 +62,10 @@ public class Display{
 		instructPanel = new JPanel();
 		scorePanel = new JPanel();
 		askPanel = new JPanel();
-		
+		alertPanel = new JPanel();
 	
 		// Import ImageIcon   
+		//Show opening splash screen with Ukrainian flag
 		picLabel = new JLabel();	
 		try {
 			String imageName = ( "images/su.png");
@@ -96,7 +97,8 @@ public class Display{
 		instructLabel = new JLabel();
 		instructLabel.setText("Instructions...");
 		instructLabel.setVerticalAlignment(JLabel.TOP);
-
+		
+		pic2Label = new JLabel();
 
 		exitButton = new JButton("Exit");
 		exitButton.addActionListener(new ExitActionListener());
@@ -141,7 +143,16 @@ public class Display{
 		askPanel.add(yesButton);
 		askPanel.add(noButton);
 
+		alertPanel.add(pic2Label);
+
 		frame.add(titlePanel);
+		
+		String playerName=getName("Name: ");
+		player.setName(playerName);
+		if (playerName.length()<1){
+			playerName="Volodymyr Zelenskyy";
+		}
+		player.setName(playerName);
 		frame.setVisible(true);
 	}
 
@@ -156,16 +167,15 @@ public class Display{
 			curIndex+=1;
 			mouseClicked=false;
 			
-			System.out.println("got here:"+curIndex);
 			randIndex=getRandomIndex();
 			good=logos[randIndex].isGood();
 			company=logos[randIndex].getCompany();
 			logoFilename=logos[randIndex].getFilename();
 			
-			System.out.println(curIndex+"Next random logo: "+good+"  "+company+"  "+logoFilename);			
+			//System.out.println(curIndex+"Next random logo: "+good+"  "+company+"  "+logoFilename);			
 			try {
 				File file=new File("images/"+logoFilename);
-				System.out.println("Loading pic:"+file+"  "+ "  filesize:"+file.length());
+				//System.out.println("Loading pic:"+file+"  "+ "  filesize:"+file.length());
 
 				String imageName = ("images/"+logoFilename);
 				picLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
@@ -274,27 +284,34 @@ public class Display{
 
 	class GoodActionListener implements ActionListener{  // checks player choice/assigns points
 		public void actionPerformed(ActionEvent a){
-			System.out.println("User pressed GOOD button  curIndex:"+curIndex);
-			if(logos[randIndex].isGood()){              // isGood() returns
-				
+			//System.out.println("User pressed GOOD button  curIndex:"+curIndex);
+			//System.out.println("randIndex:"+randIndex+ " logos[randIndex].isGood():"+logos[randIndex].isGood());   
+			if(logos[randIndex].isGood()){              // isGood() returns	
 				player.correct(); // increment score by 1 in Player class
+			}
+			else{
+				player.incorrect(); // decrement score by 1 in Player class
+				splashAlert("Wrong!");
 			}
 			displayLogo();
 			mouseClicked=true;
-			//curIndex++;
 		}
 	}
 
 	class BadActionListener implements ActionListener{  // checks player choice/assigns points
 		public void actionPerformed(ActionEvent a){
-			System.out.println("User pressed BAD button");
-			if(!logos[randIndex].isGood()){
-				System.out.println("GGot here");
-				player.incorrect(); // decrement score by 1 in Player class
+			//System.out.println("User pressed BAD button");
+			//System.out.println("randIndex:"+randIndex+ " logos[randIndex].isGood():"+logos[randIndex].isGood());   
+
+			if( !(logos[randIndex].isGood()) ){
+				player.correct(); // decrement score by 1 in Player class
 			}
+			else{
+				splashAlert("Wrong!");
+				player.incorrect(); // decrement score by 1 in Player class
+			}	
 			displayLogo();
 			mouseClicked=true;
-			//curIndex++;
 		}
 	}
 
@@ -339,4 +356,33 @@ public class Display{
 		return randInt;
 	}	
 
+	public String getName(String m) {
+		return JOptionPane.showInputDialog(null, m);
+    }
+	
+	
+
+	
+	public void splashAlert(String s) {	
+		//Show wrong answer pic
+	
+		try {
+			frame.setVisible(false);
+			frame.remove(logoPanel);
+			String imageName = ( "images/wrong.png");
+			pic2Label.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
+			alertPanel.add(pic2Label);
+			frame.add(alertPanel);
+			frame.setVisible(true);			
+			Thread.sleep(1500);
+			alertPanel.remove(pic2Label);
+			frame.remove(alertPanel);
+			frame.add(logoPanel);
+			//frame.setVisible(false);		
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	
 }
