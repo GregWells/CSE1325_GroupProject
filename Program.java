@@ -12,7 +12,7 @@ public class Program{
 	public static void main(String[] args){
 		
 		Person p1 = new Person();
-		p1.setName("Volodymyr Zelenskyy");    //temporary; need GUI component 
+		p1.setName("Volodymyr Zelenskyy");    //temporary; need GUI component //test
 		
 		Display d1 = new Display(p1);
 
