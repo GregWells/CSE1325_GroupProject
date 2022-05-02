@@ -152,6 +152,7 @@ public class Display{
 		if (playerName.length()<1){
 			playerName="Volodymyr Zelenskyy";
 		}
+		System.out.println("Player: "+playerName);
 		player.setName(playerName);
 		frame.setVisible(true);
 	}
