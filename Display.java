@@ -147,55 +147,56 @@ public class Display{
 
 
   	public void displayLogo(){
-		frame.remove(instructPanel);
-		frame.setVisible(false);
-		frame.add(logoPanel);
-		frame.pack();
-		frame.setVisible(true);
-		curIndex+=1;
-		mouseClicked=false;
-		
-		System.out.println("got here:"+curIndex);
-		randIndex=getRandomIndex();
-		good=logos[randIndex].isGood();
-		company=logos[randIndex].getCompany();
-		logoFilename=logos[randIndex].getFilename();
-		
-		System.out.println(curIndex+"Next random logo: "+good+"  "+company+"  "+logoFilename);			
-		try {
-			File file=new File("images/"+logoFilename);
-			System.out.println("Loading pic:"+file+"  "+ "  filesize:"+file.length());
-
-			String imageName = ("images/"+logoFilename);
-			picLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
-
-			logoPanel.add(picLabel);
-			logoPanel.add(goodButton);
-			logoPanel.add(badButton);
-
-			goodButton.setActionCommand("GOOD");
-			badButton.setActionCommand("BAD");
-			frame.add(logoPanel); 
+		if (curIndex<loops){ 
+			frame.remove(instructPanel);
+			frame.setVisible(false);
+			frame.add(logoPanel);
+			frame.pack();
 			frame.setVisible(true);
-		
-		} 
-		catch (Exception e) {
-			System.out.println("Error loading pic"+"images/"+logoFilename);
-			e.getStackTrace();
-		}
+			curIndex+=1;
+			mouseClicked=false;
 			
-		try {
-			Thread.sleep(200);
-		} catch (InterruptedException e2) {
-			e2.printStackTrace();
-		}
-		//mouseClicked=false;	
+			System.out.println("got here:"+curIndex);
+			randIndex=getRandomIndex();
+			good=logos[randIndex].isGood();
+			company=logos[randIndex].getCompany();
+			logoFilename=logos[randIndex].getFilename();
 			
-	
-	//frame.setVisible(false);
-	//frame.remove(logoPanel);
-	//frame.add(scorePanel);
-	//frame.setVisible(true);
+			System.out.println(curIndex+"Next random logo: "+good+"  "+company+"  "+logoFilename);			
+			try {
+				File file=new File("images/"+logoFilename);
+				System.out.println("Loading pic:"+file+"  "+ "  filesize:"+file.length());
+
+				String imageName = ("images/"+logoFilename);
+				picLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
+
+				logoPanel.add(picLabel);
+				logoPanel.add(goodButton);
+				logoPanel.add(badButton);
+
+				goodButton.setActionCommand("GOOD");
+				badButton.setActionCommand("BAD");
+				frame.add(logoPanel); 
+				frame.setVisible(true);
+			
+			} 
+			catch (Exception e) {
+				System.out.println("Error loading pic"+"images/"+logoFilename);
+				e.getStackTrace();
+			}
+				
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e2) {
+				e2.printStackTrace();
+			}
+		}	//mouseClicked=false;	
+		else{			
+			frame.setVisible(false);
+			frame.remove(logoPanel);
+			frame.add(scorePanel);
+			frame.setVisible(true);
+		}
 	}
 	
 	
@@ -280,7 +281,7 @@ public class Display{
 			}
 			displayLogo();
 			mouseClicked=true;
-			curIndex++;
+			//curIndex++;
 		}
 	}
 
@@ -293,7 +294,7 @@ public class Display{
 			}
 			displayLogo();
 			mouseClicked=true;
-			curIndex++;
+			//curIndex++;
 		}
 	}
 
