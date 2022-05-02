@@ -39,18 +39,21 @@ public class Display{
 	String depotName;
 	//String[] line;
 	String[] companyInfo;
+	int randIndex=0;
 	public Logo logos[] =new Logo[maxImages];
 
 	public Display(Person player){
 		///logos = createLogos("companies.csv");
 		//Logo logos[] =new Logo[maxImages];
+		this.player=player;
+		this.randIndex=randIndex;
 		createLogos(logos,companyFile);
 		
 		curIndex = 0;
 
 		frame = new JFrame("Company Accountability Program for Ukraine");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(800,800);
+		frame.setSize(1000,1000);
 		frame.setLayout(new GridLayout(2,1));
 
 
@@ -153,7 +156,7 @@ public class Display{
 		mouseClicked=false;
 		
 		System.out.println("got here:"+curIndex);
-		int randIndex=getRandomIndex();
+		randIndex=getRandomIndex();
 		good=logos[randIndex].isGood();
 		company=logos[randIndex].getCompany();
 		logoFilename=logos[randIndex].getFilename();
@@ -270,8 +273,8 @@ public class Display{
 
 	class GoodActionListener implements ActionListener{  // checks player choice/assigns points
 		public void actionPerformed(ActionEvent a){
-			System.out.println("User pressed GOOD button");
-			if(logos[curIndex].isGood()){              // isGood() returns
+			System.out.println("User pressed GOOD button  curIndex:"+curIndex);
+			if(logos[randIndex].isGood()){              // isGood() returns
 				
 				player.correct(); // increment score by 1 in Player class
 			}
@@ -284,7 +287,7 @@ public class Display{
 	class BadActionListener implements ActionListener{  // checks player choice/assigns points
 		public void actionPerformed(ActionEvent a){
 			System.out.println("User pressed BAD button");
-			if(!logos[curIndex].isGood()){
+			if(!logos[randIndex].isGood()){
 				System.out.println("GGot here");
 				player.incorrect(); // decrement score by 1 in Player class
 			}
