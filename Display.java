@@ -5,15 +5,15 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import java.awt.image.BufferedImage;
+//import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
-import java.io.File;   
-import java.io.FileNotFoundException;  
+//import java.io.File;   
+//import java.io.FileNotFoundException;  
 import java.nio.file.*;
-import java.io.IOException;
-import java.nio.file.StandardOpenOption;
-import java.util.Random;
+//import java.io.IOException;
+//import java.nio.file.StandardOpenOption;
+//import java.util.Random;
 
 public class Display{
 	private JFrame frame, splashframe, badframe, goodframe;
@@ -185,23 +185,10 @@ public class Display{
 		goodPanel.add(goodpicLabel);
 		badPanel.add(badpicLabel);
 		
-		//goodframe.add(goodPanel); 
-		//badframe.add(badPanel);
-			
-		//First get the player's name.  This is a small popup window
-		//The program requires the person object 
-		//to be created first:   Display d1 = new Display(p1);
-		// where p1 is the player object                            
-		String playerName=getName("Name: ");
-		player.setName(playerName);
-		if (playerName.length()<1){
-			playerName="Volodymyr Zelenskyy";
-		}
-		System.out.println("Player: "+playerName);
-		player.setName(playerName);
-		//goodframe.setVisible(true);
-		//badframe.setVisible(true);
 
+
+		Container c = frame.getContentPane();
+		
 		//Now add the title panel to the frame and make it visible
 		//the title panel contains the start button
 		frame.add(titlePanel);		
@@ -312,7 +299,8 @@ public class Display{
 
 	public void displayInstructions(){
 		frame.remove(titlePanel);
-
+		frame.setVisible(false);
+		getPlayerName();
 		frame.setLayout(new BorderLayout());
 
 		//Jared: I want this to say:
@@ -345,6 +333,8 @@ public class Display{
 
 		frame.setSize(500,300);
 		frame.setVisible(true);
+		
+		
 	}
  
 	class StartActionListener implements ActionListener{  // title screen -> instructions
@@ -495,7 +485,8 @@ public class Display{
 	}	
 
 	public String getName(String m) {
-		return JOptionPane.showInputDialog(null, m);
+		return "NotAName";
+		//return frame.add(JOptionPane.showInputDialog(null, m));
     }
 	
 	public void showResult(String m) {
@@ -564,5 +555,21 @@ public class Display{
 		}	
 	}	
 	
+	public void getPlayerName() {		
+
+
+		//First get the player's name.  This is a small popup window
+                            
+		String playerName= JOptionPane.showInputDialog(null, "Enter player name: ");
+
+		player.setName(playerName);
+		if (playerName.length()<1){
+			playerName="Volodymyr Zelenskyy";
+		}
+		System.out.println("Player: "+playerName);
+		player.setName(playerName);
+	}	
+		
 	
+		
 }
