@@ -63,15 +63,15 @@ public class Display{
 		splashframe.setSize(600,400);
 		splashframe.setLayout(new GridLayout(1,1));
 		
-		goodframe = new JFrame("Right Answer");
-		goodframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		goodframe.setSize(600,400);
-		goodframe.setLayout(new GridLayout(1,1));
+		//goodframe = new JFrame("Right Answer");
+		//goodframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//goodframe.setSize(600,400);
+		//goodframe.setLayout(new GridLayout(1,1));
 		
-		badframe = new JFrame("Wrong Answer");
-		badframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		badframe.setSize(600,400);
-		badframe.setLayout(new GridLayout(1,1));
+		//badframe = new JFrame("Wrong Answer");
+		//badframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//badframe.setSize(600,400);
+		//badframe.setLayout(new GridLayout(1,1));
 		
 		
 
@@ -185,8 +185,8 @@ public class Display{
 		goodPanel.add(goodpicLabel);
 		badPanel.add(badpicLabel);
 		
-		goodframe.add(goodPanel); 
-		badframe.add(badPanel);
+		//goodframe.add(goodPanel); 
+		//badframe.add(badPanel);
 			
 		//First get the player's name.  This is a small popup window
 		//The program requires the person object 
@@ -199,8 +199,8 @@ public class Display{
 		}
 		System.out.println("Player: "+playerName);
 		player.setName(playerName);
-		goodframe.setVisible(true);
-		badframe.setVisible(true);
+		//goodframe.setVisible(true);
+		//badframe.setVisible(true);
 
 		//Now add the title panel to the frame and make it visible
 		//the title panel contains the start button
@@ -372,16 +372,18 @@ public class Display{
 			//System.out.println("User pressed GOOD button  curIndex:"+curIndex);
 			//System.out.println("randIndex:"+randIndex+ " logos[randIndex].isGood():"+logos[randIndex].isGood());   
 			if(logos[randIndex].isGood()){              // isGood() returns	
-				goodframe.pack();
-				goodframe.setVisible(true);
-				waitasec();
+				showResult("Correct");
+				//goodframe.pack();
+				//goodframe.setVisible(true);
+				//waitasec();
 				player.correct(); // increment score by 1 in Player class
 
 			}
 			else{
-				badframe.pack();
-				badframe.setVisible(true);
-				waitasec();
+				showResult("Wrong");
+				//badframe.pack();
+				//badframe.setVisible(true);
+				//waitasec();
 				player.incorrect(); // decrement score by 1 in Player class
 
 			}
@@ -396,16 +398,18 @@ public class Display{
 			//System.out.println("randIndex:"+randIndex+ " logos[randIndex].isGood():"+logos[randIndex].isGood());   
 
 			if( !(logos[randIndex].isGood()) ){
-				goodframe.pack();
-				goodframe.setVisible(true);
-				waitasec();
+				showResult("Correct");
+				//goodframe.pack();
+				//goodframe.setVisible(true);
+				//waitasec();
 				player.correct(); // increment score by 1 in Player class
 
 			}
 			else{
-				badframe.pack();
-				badframe.setVisible(true);
-				waitasec();
+				showResult("Wrong");
+				//badframe.pack();
+				//badframe.setVisible(true);
+				//waitasec();
 				player.incorrect(); // decrement score by 1 in Player class
 
 			}	
@@ -494,12 +498,15 @@ public class Display{
 		return JOptionPane.showInputDialog(null, m);
     }
 	
-	
+	public void showResult(String m) {
+		JOptionPane.showMessageDialog(frame, m); //basic dialog 
+		return;
+    }
 
 	
 	public void splashAlertBad() {	
 		//Show wrong answer pic
-		badframe.setVisible(true);
+		//badframe.setVisible(true);
 		System.out.println("Wrong image should be displayed");
 		try {
 			Thread.sleep(1500);		
@@ -507,7 +514,7 @@ public class Display{
 			e1.printStackTrace();
 		}
 		
-		badframe.setVisible(false);
+		//badframe.setVisible(false);
 	}
 	
 	public void splashAlertGood() {	
@@ -515,7 +522,7 @@ public class Display{
 		//goodframe.pack();
 		//goodframe.getContentPane().validate();
 		//goodframe.getContentPane().repaint();
-		goodframe.setVisible(true);
+		//goodframe.setVisible(true);
 			
 		System.out.println("Right image should be displayed");	
 		try {
@@ -526,7 +533,7 @@ public class Display{
 			e1.printStackTrace();
 		}
 		
-		goodframe.setVisible(false);
+		//goodframe.setVisible(false);
 	}
 	
 	public void waitasec() {	
