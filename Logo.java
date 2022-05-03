@@ -30,5 +30,9 @@ public class Logo{
     { 
         return this.logoFilename; 		
     }  
-
+    public ImageIcon getPic() 
+    { 
+	    ImageIcon img = new ImageIcon(getFilename());
+        return img; 		
+    } 
 } 
