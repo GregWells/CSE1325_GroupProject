@@ -17,7 +17,7 @@ import java.util.Random;
 
 public class Display{
 	private JFrame frame, splashframe, badframe, goodframe;
-	private JLabel titleLabel, instructLabel, scoreLabel, askLabel, picLabel, pic2Label,goodpicLabel,badpicLabel;
+	private JLabel titleLabel, instructLabel, scoreLabel, askLabel, picLabel, pic2Label,goodpicLabel,badpicLabel,introPicLabel;
 	private  JPanel titlePanel, instructPaneltop, instructPanelcen, instructPanelbot, logoPanel, scorePanel, askPanel, alertPanel, splashPanel,goodPanel, badPanel;
 	private JButton playButton, exitButton, againButton, startButton, goodButton, badButton, yesButton, noButton;
 	
@@ -122,6 +122,15 @@ public class Display{
 			e1.printStackTrace();
 		}
 		
+		introPicLabel = new JLabel();	
+		imageName = ( "images/intro.jpg");
+		try{
+			introPicLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
+		} catch (Exception e1) {
+			System.out.println("Error 0003: failure to load: "+imageName);
+			e1.printStackTrace();
+		}
+		
 		exitButton = new JButton("Exit");
 		exitButton.addActionListener(new ExitActionListener());
 
@@ -148,8 +157,15 @@ public class Display{
 
 
 		//add the buttons and labels to the appropriate panels
-		titlePanel.add(titleLabel);
-		titlePanel.add(startButton);
+		//titlePanel.add(titleLabel);
+		//titlePanel.add(startButton);
+		
+		titlePanel.add(introPicLabel);
+		
+		introPicLabel.setLayout( new GridBagLayout() );
+		introPicLabel.add(startButton, new GridBagConstraints());
+
+		//introPicLabel.add(startButton);
 		titlePanel.add(exitButton);
 
 		logoPanel.add(picLabel);
@@ -185,9 +201,11 @@ public class Display{
 		player.setName(playerName);
 		goodframe.setVisible(true);
 		badframe.setVisible(true);
+
 		//Now add the title panel to the frame and make it visible
 		//the title panel contains the start button
 		frame.add(titlePanel);		
+		frame.pack();
 		frame.setVisible(true);
 		
 	}
