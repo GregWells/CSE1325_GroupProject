@@ -77,9 +77,7 @@ public class Display{
 
 		//define panels that will be placed on the frame
 		titlePanel = new JPanel();
-		instructPaneltop = new JPanel();
 		instructPanelcen = new JPanel();
-		instructPanelbot = new JPanel();
 		logoPanel = new JPanel();  
 		scorePanel = new JPanel();
 		askPanel = new JPanel();
@@ -103,10 +101,6 @@ public class Display{
 		titleLabel = new JLabel("", JLabel.CENTER);
 		//titleLabel.setText("Title");  //Not needed 
 		titleLabel.setVerticalAlignment(JLabel.TOP);
-
-		instructLabel = new JLabel();
-		instructLabel.setText("<html>Instructions: <br>This is a<br>multline label<br> </html>");
-		instructLabel.setVerticalAlignment(JLabel.TOP);
 		
 		pic2Label = new JLabel();
 		
@@ -157,9 +151,6 @@ public class Display{
 		titlePanel.add(titleLabel);
 		titlePanel.add(startButton);
 		titlePanel.add(exitButton);
-
-		instructPaneltop.add(instructLabel);
-		instructPanelbot.add(playButton);
 
 		logoPanel.add(picLabel);
 		logoPanel.add(goodButton);
@@ -304,12 +295,35 @@ public class Display{
 	public void displayInstructions(){
 		frame.remove(titlePanel);
 
+		frame.setLayout(new BorderLayout());
+
+		//Jared: I want this to say:
+		//"This is a game meant to quiz your knowledge on whether the following companies are aiding in the effort to support Ukraine"
+		//"hit 'good' for if the company is in the support for Ukraine, hit 'bad' if otherwise"
+		//"and don't forget to have fun!!!"
+		instructLabel = new JLabel();
+		instructLabel.setText("<html>Instructions: <br>This is a game meant to quiz your knowledge<br>on whether the following companies are aiding in the effort to support Ukraine<br>hit 'good' for if the company is in the support for Ukraine, hit 'bad' if otherwise<br>and don't forget to have fun!!!</html>");
+		instructLabel.setVerticalAlignment(SwingConstants.CENTER); //Jared: Haven't figureed out how to center text yet.
+		instructLabel.setForeground(Color.WHITE);
+
+		instructPaneltop = new JPanel();
+
+		instructPaneltop.add(instructLabel);
 		instructPaneltop.setBackground(new Color(3,85,184));
+		instructPaneltop.setPreferredSize(new Dimension(500,131));
+		instructPaneltop.setMaximumSize(new Dimension(500,131));
+
 		frame.add(instructPaneltop,BorderLayout.PAGE_START);
 
-
+		instructPanelbot = new JPanel();
+		
+		instructPanelbot.add(playButton);
+		playButton.setVerticalAlignment(JButton.CENTER); //Jared: This doesn't work yet, don't know what I'm missing
 		instructPanelbot.setBackground(new Color(255,208,1));
-		frame.add(instructPanelbot,BorderLayout.PAGE_END);
+		instructPanelbot.setPreferredSize(new Dimension(500,131));
+		instructPanelbot.setMaximumSize(new Dimension(500,131));
+
+		frame.add(instructPanelbot,BorderLayout.SOUTH);
 
 		frame.setSize(500,300);
 		frame.setVisible(true);
@@ -326,6 +340,7 @@ public class Display{
 			frame.setVisible(false);
 			frame.remove(instructPaneltop);
 			frame.remove(instructPanelbot);
+			frame.remove(instructLabel);
 			//frame.add(logoPanel);
 			//frame.setVisible(true);
 
@@ -400,12 +415,35 @@ public class Display{
 		public void actionPerformed(ActionEvent a){
 			frame.remove(askPanel);
 
+			frame.setLayout(new BorderLayout());
+	
+			//Jared: I want this to say:
+			//"This is a game meant to quiz your knowledge on whether the following companies are aiding in the effort to support Ukraine"
+			//"hit 'good' for if the company is in the support for Ukraine, hit 'bad' if otherwise"
+			//"and don't forget to have fun!!!"
+			instructLabel = new JLabel();
+			instructLabel.setText("<html>Instructions: <br>This is a game meant to quiz your knowledge<br>on whether the following companies are aiding in the effort to support Ukraine<br>hit 'good' for if the company is in the support for Ukraine, hit 'bad' if otherwise<br>and don't forget to have fun!!!</html>");
+			instructLabel.setVerticalAlignment(SwingConstants.CENTER); //Jared: Haven't figureed out how to center text yet.
+			instructLabel.setForeground(Color.WHITE);
+	
+			instructPaneltop = new JPanel();
+	
+			instructPaneltop.add(instructLabel);
 			instructPaneltop.setBackground(new Color(3,85,184));
+			instructPaneltop.setPreferredSize(new Dimension(500,131));
+			instructPaneltop.setMaximumSize(new Dimension(500,131));
+	
 			frame.add(instructPaneltop,BorderLayout.PAGE_START);
 	
-	
+			instructPanelbot = new JPanel();
+			
+			instructPanelbot.add(playButton);
+			playButton.setVerticalAlignment(JButton.CENTER); //Jared: This doesn't work yet, don't know what I'm missing
 			instructPanelbot.setBackground(new Color(255,208,1));
-			frame.add(instructPanelbot,BorderLayout.PAGE_END);
+			instructPanelbot.setPreferredSize(new Dimension(500,131));
+			instructPanelbot.setMaximumSize(new Dimension(500,131));
+	
+			frame.add(instructPanelbot,BorderLayout.SOUTH);
 	
 			frame.setSize(500,300);
 			frame.setVisible(true);
@@ -417,6 +455,8 @@ public class Display{
 			frame.remove(askPanel);
 			frame.remove(instructPaneltop);
 			frame.remove(instructPanelbot);
+			frame.remove(instructLabel);
+			frame.remove(playButton);
 			frame.setVisible(false);
 			frame.add(logoPanel);
 			frame.setVisible(true);
