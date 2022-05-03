@@ -186,12 +186,10 @@ public class Display{
 		badPanel.add(badpicLabel);
 		
 
-
-		Container c = frame.getContentPane();
-		
 		//Now add the title panel to the frame and make it visible
 		//the title panel contains the start button
 		frame.add(titlePanel);		
+		frame.setLocationRelativeTo(null);
 		frame.pack();
 		frame.setVisible(true);
 		
@@ -225,6 +223,7 @@ public class Display{
 				frame.getContentPane().validate();
 				frame.getContentPane().repaint();
 				frame.pack();
+				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 
 			
@@ -244,6 +243,7 @@ public class Display{
 			frame.setVisible(false);
 			frame.remove(logoPanel);
 			frame.add(scorePanel);
+			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
 		}
 	}
@@ -294,6 +294,7 @@ public class Display{
 		scoreLabel.setText("Score: "+player.getScore()+"/");
 
 		frame.add(scorePanel);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 
@@ -332,6 +333,7 @@ public class Display{
 		frame.add(instructPanelbot,BorderLayout.SOUTH);
 
 		frame.setSize(500,300);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
 		
@@ -419,6 +421,7 @@ public class Display{
 		public void actionPerformed(ActionEvent a){
 			frame.remove(scorePanel);
 			frame.add(askPanel);
+			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
 		}
 	}
@@ -458,6 +461,7 @@ public class Display{
 			frame.add(instructPanelbot,BorderLayout.SOUTH);
 	
 			frame.setSize(500,300);
+			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
 		}
 	}
@@ -471,6 +475,7 @@ public class Display{
 			frame.remove(playButton);
 			frame.setVisible(false);
 			frame.add(logoPanel);
+			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
 			System.out.println("Got here: NoActionListener");
 			displayLogo();
@@ -545,10 +550,12 @@ public class Display{
 			picLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
 			splashPanel.add(picLabel);
 			splashframe.add(splashPanel);
+			splashframe.setLocationRelativeTo(null);
 			splashframe.setVisible(true);			
 			Thread.sleep(2000);
 			//splashPanel.remove(picLabel);
 			//splashframe.remove(splashPanel);
+			splashframe.setLocationRelativeTo(null);
 			splashframe.setVisible(false);		
 		} catch (Exception e1) {
 			e1.printStackTrace();
