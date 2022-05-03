@@ -16,9 +16,9 @@ import java.nio.file.StandardOpenOption;
 import java.util.Random;
 
 public class Display{
-	private JFrame frame, splashframe, frame2;
-	private JLabel titleLabel, instructLabel, scoreLabel, askLabel, picLabel, pic2Label;
-	private  JPanel titlePanel, instructPanel, logoPanel, scorePanel, askPanel, alertPanel, splashPanel;
+	private JFrame frame, splashframe, badframe, goodframe;
+	private JLabel titleLabel, instructLabel, scoreLabel, askLabel, picLabel, pic2Label,goodpicLabel,badpicLabel;
+	private  JPanel titlePanel, instructPanel, logoPanel, scorePanel, askPanel, alertPanel, splashPanel,goodPanel, badPanel;
 	private JButton playButton, exitButton, againButton, startButton, goodButton, badButton, yesButton, noButton;
 	
     ///ArrayList<Logo> logos;
@@ -58,10 +58,21 @@ public class Display{
 		frame.setSize(1000,1000);
 		frame.setLayout(new GridLayout(1,1));
 		
-		splashframe = new JFrame("Company Accountability Program for Ukraine");
+		splashframe = new JFrame("Slava Ukraini");
 		splashframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		splashframe.setSize(600,400);
 		splashframe.setLayout(new GridLayout(1,1));
+		
+		goodframe = new JFrame("Right Answer");
+		goodframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		goodframe.setSize(600,400);
+		goodframe.setLayout(new GridLayout(1,1));
+		
+		badframe = new JFrame("Wrong Answer");
+		badframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		badframe.setSize(600,400);
+		badframe.setLayout(new GridLayout(1,1));
+		
 		
 
 		//define panels that will be placed on the frame
@@ -72,22 +83,11 @@ public class Display{
 		askPanel = new JPanel();
 		alertPanel = new JPanel();
 		splashPanel = new JPanel();
-	  
-		//Show opening splash screen with Ukrainian flag
-		try {
-			String imageName = ( "images/su.png");
-			picLabel = new JLabel();	
-			picLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
-			splashPanel.add(picLabel);
-			splashframe.add(splashPanel);
-			splashframe.setVisible(true);			
-			Thread.sleep(2000);
-			splashPanel.remove(picLabel);
-			splashframe.remove(splashPanel);
-			splashframe.setVisible(false);		
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}		
+	    goodPanel = new JPanel();
+		badPanel = new JPanel();
+		
+		splashSlava();  //Show opening splash screen with Ukrainian flag
+		
 		
 		//establish the labels and buttons that will be placed on the panels	
 		askLabel = new JLabel();
@@ -107,7 +107,25 @@ public class Display{
 		instructLabel.setVerticalAlignment(JLabel.TOP);
 		
 		pic2Label = new JLabel();
+		
+		goodpicLabel = new JLabel();	
+		String imageName = ( "images/right.jpg");
+		try{
+			goodpicLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
+		} catch (Exception e1) {
+			System.out.println("Error 0001: failure to load: "+imageName);
+			e1.printStackTrace();
+		}
 
+		badpicLabel = new JLabel();	
+		imageName = ( "images/wrong.png");
+		try{
+			badpicLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
+		} catch (Exception e1) {
+			System.out.println("Error 0002: failure to load: "+imageName);
+			e1.printStackTrace();
+		}
+		
 		exitButton = new JButton("Exit");
 		exitButton.addActionListener(new ExitActionListener());
 
@@ -154,9 +172,13 @@ public class Display{
 		askPanel.add(noButton);
 
 		alertPanel.add(pic2Label);
-
-
 		
+		goodPanel.add(goodpicLabel);
+		badPanel.add(badpicLabel);
+		
+		goodframe.add(goodPanel); 
+		badframe.add(badPanel);
+			
 		//First get the player's name.  This is a small popup window
 		//The program requires the person object 
 		//to be created first:   Display d1 = new Display(p1);
@@ -168,7 +190,8 @@ public class Display{
 		}
 		System.out.println("Player: "+playerName);
 		player.setName(playerName);
-		
+		goodframe.setVisible(true);
+		badframe.setVisible(true);
 		//Now add the title panel to the frame and make it visible
 		//the title panel contains the start button
 		frame.add(titlePanel);		
@@ -198,13 +221,11 @@ public class Display{
 				String imageName = ("images/"+logoFilename);
 				picLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
 
-				logoPanel.add(picLabel);
-				logoPanel.add(goodButton);
-				logoPanel.add(badButton);
-
 				goodButton.setActionCommand("GOOD");
 				badButton.setActionCommand("BAD");
-				frame.add(logoPanel); 
+				//frame.add(logoPanel); 
+				frame.getContentPane().validate();
+				frame.getContentPane().repaint();
 				frame.pack();
 				frame.setVisible(true);
 
@@ -220,7 +241,7 @@ public class Display{
 			} catch (InterruptedException e2) {
 				e2.printStackTrace();
 			}
-		}	//mouseClicked=false;	
+		}		
 		else{			
 			frame.setVisible(false);
 			frame.remove(logoPanel);
@@ -307,14 +328,21 @@ public class Display{
 			//System.out.println("User pressed GOOD button  curIndex:"+curIndex);
 			//System.out.println("randIndex:"+randIndex+ " logos[randIndex].isGood():"+logos[randIndex].isGood());   
 			if(logos[randIndex].isGood()){              // isGood() returns	
+				goodframe.pack();
+				goodframe.setVisible(true);
+				waitasec();
 				player.correct(); // increment score by 1 in Player class
+
 			}
 			else{
+				badframe.pack();
+				badframe.setVisible(true);
+				waitasec();
 				player.incorrect(); // decrement score by 1 in Player class
-				splashAlert("Wrong!");
+
 			}
+
 			displayLogo();
-			mouseClicked=true;
 		}
 	}
 
@@ -324,14 +352,22 @@ public class Display{
 			//System.out.println("randIndex:"+randIndex+ " logos[randIndex].isGood():"+logos[randIndex].isGood());   
 
 			if( !(logos[randIndex].isGood()) ){
-				player.correct(); // decrement score by 1 in Player class
+				goodframe.pack();
+				goodframe.setVisible(true);
+				waitasec();
+				player.correct(); // increment score by 1 in Player class
+
 			}
 			else{
-				splashAlert("Wrong!");
+				badframe.pack();
+				badframe.setVisible(true);
+				waitasec();
 				player.incorrect(); // decrement score by 1 in Player class
+
 			}	
+
 			displayLogo();
-			mouseClicked=true;
+
 		}
 	}
 
@@ -383,26 +419,65 @@ public class Display{
 	
 
 	
-	public void splashAlert(String s) {	
+	public void splashAlertBad() {	
 		//Show wrong answer pic
-	
+		badframe.setVisible(true);
+		System.out.println("Wrong image should be displayed");
 		try {
-			frame.setVisible(false);
-			frame.remove(logoPanel);
-			String imageName = ( "images/wrong.png");
-			pic2Label.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
-			alertPanel.add(pic2Label);
-			frame.add(alertPanel);
-			frame.setVisible(true);			
-			Thread.sleep(1500);
-			alertPanel.remove(pic2Label);
-			frame.remove(alertPanel);
-			frame.add(logoPanel);
-			//frame.setVisible(false);		
+			Thread.sleep(1500);		
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+		
+		badframe.setVisible(false);
 	}
+	
+	public void splashAlertGood() {	
+		//Show right answer pic
+		//goodframe.pack();
+		//goodframe.getContentPane().validate();
+		//goodframe.getContentPane().repaint();
+		goodframe.setVisible(true);
+			
+		System.out.println("Right image should be displayed");	
+		try {
+		
+			Thread.sleep(1500);
+					
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		
+		goodframe.setVisible(false);
+	}
+	
+	public void waitasec() {	
+		
+		try {
+			Thread.sleep(1500);		
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	
+	}
+		
+	public void splashSlava() {	
+		//Show opening splash screen with Ukrainian flag
+		try {
+			String imageName = ( "images/su.png");
+			picLabel = new JLabel();	
+			picLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
+			splashPanel.add(picLabel);
+			splashframe.add(splashPanel);
+			splashframe.setVisible(true);			
+			Thread.sleep(2000);
+			//splashPanel.remove(picLabel);
+			//splashframe.remove(splashPanel);
+			splashframe.setVisible(false);		
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}	
+	}	
 	
 	
 }
