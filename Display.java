@@ -18,7 +18,7 @@ import java.util.Random;
 public class Display{
 	private JFrame frame, splashframe, badframe, goodframe;
 	private JLabel titleLabel, instructLabel, scoreLabel, askLabel, picLabel, pic2Label,goodpicLabel,badpicLabel;
-	private  JPanel titlePanel, instructPanel, logoPanel, scorePanel, askPanel, alertPanel, splashPanel,goodPanel, badPanel;
+	private  JPanel titlePanel, instructPaneltop, instructPanelcen, instructPanelbot, logoPanel, scorePanel, askPanel, alertPanel, splashPanel,goodPanel, badPanel;
 	private JButton playButton, exitButton, againButton, startButton, goodButton, badButton, yesButton, noButton;
 	
     ///ArrayList<Logo> logos;
@@ -77,7 +77,9 @@ public class Display{
 
 		//define panels that will be placed on the frame
 		titlePanel = new JPanel();
-		instructPanel = new JPanel();
+		instructPaneltop = new JPanel();
+		instructPanelcen = new JPanel();
+		instructPanelbot = new JPanel();
 		logoPanel = new JPanel();  
 		scorePanel = new JPanel();
 		askPanel = new JPanel();
@@ -156,8 +158,8 @@ public class Display{
 		titlePanel.add(startButton);
 		titlePanel.add(exitButton);
 
-		instructPanel.add(instructLabel);
-		instructPanel.add(playButton);
+		instructPaneltop.add(instructLabel);
+		instructPanelbot.add(playButton);
 
 		logoPanel.add(picLabel);
 		logoPanel.add(goodButton);
@@ -301,7 +303,15 @@ public class Display{
 
 	public void displayInstructions(){
 		frame.remove(titlePanel);
-		frame.add(instructPanel);
+
+		instructPaneltop.setBackground(new Color(3,85,184));
+		frame.add(instructPaneltop,BorderLayout.PAGE_START);
+
+
+		instructPanelbot.setBackground(new Color(255,208,1));
+		frame.add(instructPanelbot,BorderLayout.PAGE_END);
+
+		frame.setSize(500,300);
 		frame.setVisible(true);
 	}
  
@@ -314,7 +324,8 @@ public class Display{
 	class PlayActionListener implements ActionListener{  // instructions -> logo gameplay
 		public void actionPerformed(ActionEvent a){
 			frame.setVisible(false);
-			frame.remove(instructPanel);
+			frame.remove(instructPaneltop);
+			frame.remove(instructPanelbot);
 			//frame.add(logoPanel);
 			//frame.setVisible(true);
 
@@ -388,7 +399,15 @@ public class Display{
 	class YesActionListener implements ActionListener{ // ask screen -> instruction screen
 		public void actionPerformed(ActionEvent a){
 			frame.remove(askPanel);
-			frame.add(instructPanel);
+
+			instructPaneltop.setBackground(new Color(3,85,184));
+			frame.add(instructPaneltop,BorderLayout.PAGE_START);
+	
+	
+			instructPanelbot.setBackground(new Color(255,208,1));
+			frame.add(instructPanelbot,BorderLayout.PAGE_END);
+	
+			frame.setSize(500,300);
 			frame.setVisible(true);
 		}
 	}
@@ -396,7 +415,8 @@ public class Display{
 	class NoActionListener implements ActionListener{ // ask screen -> logo gameplay
 		public void actionPerformed(ActionEvent a){
 			frame.remove(askPanel);
-			frame.remove(instructPanel);
+			frame.remove(instructPaneltop);
+			frame.remove(instructPanelbot);
 			frame.setVisible(false);
 			frame.add(logoPanel);
 			frame.setVisible(true);
