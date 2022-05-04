@@ -1,0 +1,25 @@
+Punchlist:
+
+I think the "Slava Ukraini" splash screen is probably redundant now with the modified UKR grainfield screen that follows. Maybe it looks a little impressive though??
+
+It would probably be best to open the window centered within the physical screen instead of jammed in the upper left corner.
+
+The joptionpanel to get the player name would be better to have within the preceding "grainfield" frame. 
+
+The Instruction screen should be larger. 
+
+The right/wrong popup message window should disappear after 2 seconds so the player doesn't need to click to dismiss it.
+
+The Good & Bad buttons should be overlayed on the logo not off to the side
+
+The score should be displayed continuously
+
+The final score screen should be displayed when complete
+Ideally a leaderboard of past scores. Maybe this is a bridge too far considering our timeframe. Though it wouldn't be very difficult to write the players name and score out to a csv since we've done that type of thing for homework in this class. 
+
+Some nice message should be crafted for the end screen maybe with the theme of being an ethical consumer. 
+  e.g. Which side are you taking in your everyday purchase choices?
+  
+It would  be nice to have a backgroud pic for the end like the opening grainfield. Anyone have some creative thoughts for the last screen?
+
+
