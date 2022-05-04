@@ -60,20 +60,9 @@ public class Display{
 		
 		splashframe = new JFrame("Slava Ukraini");
 		splashframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		splashframe.setSize(600,400);
+		splashframe.setSize(600,380); 
 		splashframe.setLayout(new GridLayout(1,1));
-		
-		//goodframe = new JFrame("Right Answer");
-		//goodframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//goodframe.setSize(600,400);
-		//goodframe.setLayout(new GridLayout(1,1));
-		
-		//badframe = new JFrame("Wrong Answer");
-		//badframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//badframe.setSize(600,400);
-		//badframe.setLayout(new GridLayout(1,1));
-		
-		
+			
 
 		//define panels that will be placed on the frame
 		titlePanel = new JPanel();
@@ -168,9 +157,17 @@ public class Display{
 		//introPicLabel.add(startButton);
 		titlePanel.add(exitButton);
 
+
+		
+		//logoPanel.add(goodButton);    //move the good/bad buttons onto the picLabel
+		//logoPanel.add(badButton);
+		picLabel.add(goodButton);
+		picLabel.add(badButton);
+		goodButton.setBounds(50, 50, 200, 60);   //JButton.setBounds(x,y,w,h)
+		badButton.setBounds(350, 50, 200, 60);   //JButton.setBounds(x,y,w,h)
+		goodButton.setBackground(Color.GREEN);	
+		badButton.setBackground(Color.RED);		
 		logoPanel.add(picLabel);
-		logoPanel.add(goodButton);
-		logoPanel.add(badButton);
 
 		scorePanel.add(scoreLabel);
 		scorePanel.add(againButton);
@@ -182,8 +179,8 @@ public class Display{
 
 		alertPanel.add(pic2Label);
 		
-		goodPanel.add(goodpicLabel);
-		badPanel.add(badpicLabel);
+		//goodPanel.add(goodpicLabel);
+		//badPanel.add(badpicLabel);
 		
 
 		//Now add the title panel to the frame and make it visible
