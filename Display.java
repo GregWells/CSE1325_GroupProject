@@ -6,16 +6,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.Timer;
-
-//import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-
-//import java.io.File;   
-//import java.io.FileNotFoundException;  
 import java.nio.file.*;
-//import java.io.IOException;
-//import java.nio.file.StandardOpenOption;
-//import java.util.Random;
+
 
 public class Display{
 	private JFrame frame, splashframe, badframe, goodframe;
@@ -302,7 +295,8 @@ public class Display{
 		frame.setVisible(false);
 		getPlayerName();
 		frame.setLayout(new BorderLayout());
-
+		int width=800;
+		int height=500;
 		//Jared: I want this to say:
 		//"This is a game meant to quiz your knowledge on whether the following companies are aiding in the effort to support Ukraine"
 		//"hit 'good' for if the company is in the support for Ukraine, hit 'bad' if otherwise"
@@ -316,8 +310,8 @@ public class Display{
 
 		instructPaneltop.add(instructLabel);
 		instructPaneltop.setBackground(new Color(3,85,184));
-		instructPaneltop.setPreferredSize(new Dimension(500,131));
-		instructPaneltop.setMaximumSize(new Dimension(500,131));
+		instructPaneltop.setPreferredSize(new Dimension(width,(height/2)-4) );
+		instructPaneltop.setMaximumSize(new Dimension(width,(height/2)-4) );
 
 		frame.add(instructPaneltop,BorderLayout.PAGE_START);
 
@@ -326,12 +320,12 @@ public class Display{
 		instructPanelbot.add(playButton);
 		playButton.setVerticalAlignment(JButton.CENTER); //Jared: This doesn't work yet, don't know what I'm missing
 		instructPanelbot.setBackground(new Color(255,208,1));
-		instructPanelbot.setPreferredSize(new Dimension(500,131));
-		instructPanelbot.setMaximumSize(new Dimension(500,131));
+		instructPanelbot.setPreferredSize(new Dimension(width,height/2));
+		instructPanelbot.setMaximumSize(new Dimension(width,height/2));
 
 		frame.add(instructPanelbot,BorderLayout.SOUTH);
 
-		frame.setSize(500,300);
+		frame.setSize(width,height);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
@@ -364,17 +358,11 @@ public class Display{
 			//System.out.println("randIndex:"+randIndex+ " logos[randIndex].isGood():"+logos[randIndex].isGood());   
 			if(logos[randIndex].isGood()){              // isGood() returns	
 				showResultWithTimer("Correct",frame,logoPanel );
-				//goodframe.pack();
-				//goodframe.setVisible(true);
-				//waitasec();
 				player.correct(); // increment score by 1 in Player class
 
 			}
 			else{
 				showResultWithTimer("Wrong",frame,logoPanel);
-				//badframe.pack();
-				//badframe.setVisible(true);
-				//waitasec();
 				player.incorrect(); // decrement score by 1 in Player class
 
 			}
@@ -390,17 +378,11 @@ public class Display{
 
 			if( !(logos[randIndex].isGood()) ){
 				showResultWithTimer("Correct",frame,logoPanel);
-				//goodframe.pack();
-				//goodframe.setVisible(true);
-				//waitasec();
 				player.correct(); // increment score by 1 in Player class
 
 			}
 			else{
 				showResultWithTimer("Wrong",frame,logoPanel);
-				//badframe.pack();
-				//badframe.setVisible(true);
-				//waitasec();
 				player.incorrect(); // decrement score by 1 in Player class
 
 			}	
@@ -497,66 +479,8 @@ public class Display{
 		JOptionPane.showMessageDialog(frame, m); //basic dialog 
 		return;
     }
-/*
-	public void showResult3(String m,JFrame frame, JPanel logoPanel) {
-		int TIME_VISIBLE=2500;
-		//JOptionPane.showMessageDialog(frame, m); //basic dialog 
-		
-		JButton button = new JButton("My Button");
-		frame.getContentPane().add(button);
-		
-		button.addActionListener(e -> {
-			//JOptionPane pane = new JOptionPane(m,JOptionPane.INFORMATION_MESSAGE);
-			JOptionPane pane = new JOptionPane(m,JOptionPane.INFORMATION_MESSAGE);
-
-			//JOptionPane.showMessageDialog(frame, m);
-			//JOptionPane pane = new JOptionPane(m,JOptionPane.INFORMATION_MESSAGE);
-			JDialog dialog = pane.createDialog(null, "Title");
-			dialog.setModal(false);
-			dialog.setVisible(true);
-
-			new Timer(TIME_VISIBLE, new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					dialog.setVisible(false);
-				}
-			}).start();
-		});
-		frame.setVisible(true);
-		return;
-    }
 	
-	
-	
-	public void showResult3(String m,JFrame frame, JPanel logoPanel) {
-		int TIME_VISIBLE=2500;
-		JOptionPane pane = new  JOptionPane(m,JOptionPane.INFORMATION_MESSAGE); //basic dialog 
-		
-		//JButton button = new JButton("My Button");
-		//frame.getContentPane().add(button);
-		
-		pane.addActionListener(e -> {
-			//JOptionPane pane = new JOptionPane(m,JOptionPane.INFORMATION_MESSAGE);
-			//JOptionPane pane = new JOptionPane(m,JOptionPane.INFORMATION_MESSAGE);
-
-			//JOptionPane.showMessageDialog(frame, m);
-			//JOptionPane pane = new JOptionPane(m,JOptionPane.INFORMATION_MESSAGE);
-			JDialog dialog = pane.createDialog(null, "Title");
-			dialog.setModal(false);
-			dialog.setVisible(true);
-
-			new Timer(TIME_VISIBLE, new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					dialog.setVisible(false);
-				}
-			}).start();
-		});
-		frame.setVisible(true);
-		return;
-    }
-*/	
-		public void showResultWithTimer(String m,JFrame frame, JPanel logoPanel) {
+	public void showResultWithTimer(String m,JFrame frame, JPanel logoPanel) {
 			int TIME_VISIBLE=1000;
 			JOptionPane pane = new JOptionPane();
 			pane.setMessageType(JOptionPane.PLAIN_MESSAGE);
@@ -587,39 +511,7 @@ public class Display{
 			dialog.setVisible(true);
 		return;
     }
-/*	
-	public void splashAlertBad() {	
-		//Show wrong answer pic
-		//badframe.setVisible(true);
-		System.out.println("Wrong image should be displayed");
-		try {
-			Thread.sleep(1500);		
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		
-		//badframe.setVisible(false);
-	}
 	
-	public void splashAlertGood() {	
-		//Show right answer pic
-		//goodframe.pack();
-		//goodframe.getContentPane().validate();
-		//goodframe.getContentPane().repaint();
-		//goodframe.setVisible(true);
-			
-		System.out.println("Right image should be displayed");	
-		try {
-		
-			Thread.sleep(1500);
-					
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		
-		//goodframe.setVisible(false);
-	}
-*/	
 	public void waitasec() {	
 		
 		try {
