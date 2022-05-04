@@ -1,4 +1,5 @@
-//As of 11:15PM on Tues
+import usefulstuff.*; 
+
 import java.io.*;
 import java.util.*;
 import java.lang.NullPointerException;
@@ -25,7 +26,8 @@ public class Display{
 	int maxImages=50;
 	String company;
 	String logoFilename;	
-	
+	String leaderboardFilename="leaderboard.csv";
+	boolean result=false;
 	String companyFile="companies.csv";
 	String progName="Company Accountability Program for Ukraine";
 	static int logoCount=0;
@@ -301,10 +303,12 @@ public class Display{
 	public void displayScore(){
 		frame.remove(logoPanel);
 		frame.setTitle(progName);
+		writeResult( leaderboardFilename, player.getName(), player.getScore());
 		player.setFinalScore(player.getScore());  // finalizes player score ; need getScore() accessor and setFinalScore() setter
 		///scoreLabel.setText("Score: "+player.getName()+"   "+player.getScore()+"/"+logos.size());
-
-		scoreLabel.setFont(new Font("Arial", Font.PLAIN, 35));
+		System.out.println("Leader:  "+showLeaderboard( leaderboardFilename));
+		
+		scoreLabel.setFont(new Font("Arial", Font.PLAIN, 24));
 		scoreLabel.setText("Score: "+player.getName()+"   "+player.getScore()+" ");
 		scoreLabel.setForeground(Color.BLACK);
 
@@ -611,7 +615,62 @@ public class Display{
 		//frame.dispose();
 	}	
 	
+	public void writeResult(String filename, String name, int score){
+		try { 
+						File leaderboardFile = new File(filename); 
+						Scanner outFile= new Scanner(leaderboardFile);
+						String dataLine=(Integer.toString(score)+","+name+"\n");
+						result=Useful.write( dataLine, filename);
+						System.out.println("Wrote : "+name+" score:"+score +"to file:"+filename);
+						
+					}
+					catch (Exception e) {
+						System.out.println("Error writing to: "+filename);
+						}
 	
+		return;
+	}
 	
-		
+	public String showLeaderboard(String filename){
+		int highScore=-99;
+		int highScoreIndex=0;
+		int score[]=new int[1000];
+		String name[]= new String[1000];
+		String resultString="";
+		int counter=0;
+		try { 
+			File myObj = new File(filename); 
+			Scanner inFile= new Scanner(myObj);  
+			
+			while (inFile.hasNextLine()){
+				//
+				String info= inFile.nextLine(); 
+				///System.out.println(info);
+
+				String []line=info.split(","); //split with comma delimiter
+				
+				score[counter]=Integer.parseInt(line[0]); 
+				name[counter]=line[1];
+				
+				///System.out.println("Score: "+score[counter]);
+				
+				///System.out.println("Score: "+score[counter]+"    "+name[counter]);
+
+				if (score[counter]>highScore){
+					highScore=score[counter];
+					highScoreIndex=counter;
+				}
+				counter++;	
+				
+			}	
+		///System.out.println("High:"+highScore + "   "+name[highScoreIndex]);					
+		}
+		catch (Exception e) { //report exception here 
+			//System.out.println("Here is what happened: "+e); 
+			///System.out.println("High:"+highScore + "   "+name[highScoreIndex]);
+			resultString=(Integer.toString(highScore)+"   "+name[highScoreIndex]);
+		} 
+		resultString=(Integer.toString(highScore)+"   "+name[highScoreIndex]);
+		return (resultString);
+	}		
 }
