@@ -13,13 +13,13 @@ import java.nio.file.*;
 public class Display{
 	private JFrame frame, splashframe, badframe, goodframe;
 	private JLabel titleLabel, instructLabel, scoreLabel, askLabel, picLabel, pic2Label,goodpicLabel,badpicLabel,introPicLabel;
-	private  JPanel titlePanel, instructPaneltop, instructPanelcen, instructPanelbot, logoPanel, scorePanel, askPanel, alertPanel, splashPanel,goodPanel, badPanel;
+	private  JPanel titlePanel, instructPaneltop, instructPanelcen, instructPanelbot, logoPanel, scorePanel, askPanel, alertPanel, splashPanel,goodPanel, badPanel, botBarPanel;
 	private JButton playButton, exitButton, againButton, startButton, goodButton, badButton, yesButton, noButton;
 	
     ///ArrayList<Logo> logos;
 	Person player;
 	int curIndex;
-	boolean mouseClicked=false;
+	//boolean mouseClicked=false;
 	int loops=10;
 	boolean good;
 	int maxImages=50;
@@ -27,6 +27,7 @@ public class Display{
 	String logoFilename;	
 	
 	String companyFile="companies.csv";
+	String progName="Company Accountability Program for Ukraine";
 	static int logoCount=0;
 	int index=0;
 	double numLines=0;
@@ -48,7 +49,7 @@ public class Display{
 		curIndex = 0;
 		
 		//define frame parameters
-		frame = new JFrame("Company Accountability Program for Ukraine");
+		frame = new JFrame(progName);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1000,1000);
 		frame.setLayout(new GridLayout(1,1));
@@ -69,6 +70,7 @@ public class Display{
 		splashPanel = new JPanel();
 	    goodPanel = new JPanel();
 		badPanel = new JPanel();
+		botBarPanel= new JPanel();
 		
 		splashSlava();  //Show opening splash screen with Ukrainian flag
 		
@@ -79,8 +81,8 @@ public class Display{
 		askLabel.setHorizontalAlignment(JLabel.CENTER);
 		askLabel.setVerticalAlignment(JLabel.TOP);
 
-		scoreLabel = new JLabel();
-		scoreLabel.setText("Score: ");
+		scoreLabel = new JLabel("Score: ");
+		//scoreLabel.setText("Score: "+player.getScore());
 
 		titleLabel = new JLabel("", JLabel.CENTER);
 		//titleLabel.setText("Title");  //Not needed 
@@ -107,7 +109,7 @@ public class Display{
 		}
 */		
 		introPicLabel = new JLabel();	
-		imageName = ( "images/intro.jpg");
+		String imageName = ( "images/intro.jpg");
 		try{
 			introPicLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
 		} catch (Exception e1) {
@@ -144,6 +146,7 @@ public class Display{
 		//titlePanel.add(titleLabel);
 		//titlePanel.add(startButton);
 		
+		
 		titlePanel.add(introPicLabel);
 		
 		introPicLabel.setLayout( new GridBagLayout() );
@@ -156,13 +159,22 @@ public class Display{
 		
 		//logoPanel.add(goodButton);    //move the good/bad buttons onto the picLabel
 		//logoPanel.add(badButton);
+		
+		//scoreLabel.setBounds(1, 1, 100, 100);
+		//picLabel.add(scoreLabel);
+		
 		picLabel.add(goodButton);
 		picLabel.add(badButton);
 		goodButton.setBounds(50, 50, 200, 60);   //JButton.setBounds(x,y,w,h)
 		badButton.setBounds(350, 50, 200, 60);   //JButton.setBounds(x,y,w,h)
-		goodButton.setBackground(Color.GREEN);	
-		badButton.setBackground(Color.RED);		
+		goodButton.setBackground(Color.LIGHT_GRAY);	
+		goodButton.setFont(new Font("Arial", Font.BOLD, 18));
+		badButton.setBackground(Color.LIGHT_GRAY);
+		badButton.setFont(new Font("Arial", Font.BOLD, 18));
+		//picLabel.add(scoreLabel);
 		logoPanel.add(picLabel);
+		//botBarPanel.add(scoreLabel);
+		
 
 		scorePanel.add(scoreLabel);
 		scorePanel.add(againButton);
@@ -193,6 +205,9 @@ public class Display{
 			//frame.remove(instructPanel);  //redundant
 			frame.setVisible(false);
 			frame.add(logoPanel);
+			frame.setTitle(player.getName()+"   Score: "+player.getScore());
+			
+			//frame.add(botBarPanel);
 
 			curIndex+=1;
 			
@@ -234,9 +249,13 @@ public class Display{
 		else{			
 			frame.setVisible(false);
 			frame.remove(logoPanel);
+			scoreLabel.setText(player.getName()+"   Score: "+player.getScore());
+			displayScore();
 			frame.add(scorePanel);
 			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
+		
+			
 		}
 	}
 	
@@ -278,18 +297,23 @@ public class Display{
 		}
 		return ;	
 	}	
-	
+
 	public void displayScore(){
 		frame.remove(logoPanel);
+		frame.setTitle(progName);
 		player.setFinalScore(player.getScore());  // finalizes player score ; need getScore() accessor and setFinalScore() setter
-		///scoreLabel.setText("Score: "+player.getScore()+"/"+logos.size());
-		scoreLabel.setText("Score: "+player.getScore()+"/");
-		System.out.println("Score: "+player.getScore());
+		///scoreLabel.setText("Score: "+player.getName()+"   "+player.getScore()+"/"+logos.size());
+
+		scoreLabel.setFont(new Font("Arial", Font.PLAIN, 35));
+		scoreLabel.setText("Score: "+player.getName()+"   "+player.getScore()+" ");
+		scoreLabel.setForeground(Color.BLACK);
+
 		frame.add(scorePanel);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
-
+	
+	
 	public void displayInstructions(){
 		frame.remove(titlePanel);
 		frame.setVisible(false);
@@ -402,9 +426,28 @@ public class Display{
 	class AgainActionListener implements ActionListener{ // after play again chosen -> instruction ask screen
 		public void actionPerformed(ActionEvent a){
 			frame.remove(scorePanel);
-			frame.add(askPanel);
+			//frame.add(askPanel);      //go straight to logo panel without asking about instructions
+			
+			
+			frame.remove(askPanel);
+			frame.remove(instructPaneltop);
+			frame.remove(instructPanelbot);
+			frame.remove(instructLabel);
+			frame.remove(playButton);
+			frame.setVisible(false);
+			frame.add(logoPanel);
 			frame.setLocationRelativeTo(null);
-			frame.setVisible(true);
+			//frame.setVisible(true);
+			//System.out.println("Got here: NoActionListener");
+			resetGame();
+			
+			displayLogo();
+			//frame.add(logoPanel);
+			
+			
+			
+			//frame.setLocationRelativeTo(null);
+			//frame.setVisible(true);
 		}
 	}
 
@@ -459,7 +502,8 @@ public class Display{
 			frame.add(logoPanel);
 			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
-			System.out.println("Got here: NoActionListener");
+			//System.out.println("Got here: NoActionListener");
+			resetGame();
 			displayLogo();
 		}
 	}
@@ -482,7 +526,7 @@ public class Display{
     }
 	
 	public void showResultWithTimer(String m,JFrame frame, JPanel logoPanel) {
-			int TIME_VISIBLE=1000;
+			int TIME_VISIBLE=0500;
 			JOptionPane pane = new JOptionPane();
 			pane.setMessageType(JOptionPane.PLAIN_MESSAGE);
 			UIManager UI=new UIManager();
@@ -537,7 +581,8 @@ public class Display{
 			//splashPanel.remove(picLabel);
 			//splashframe.remove(splashPanel);
 			splashframe.setLocationRelativeTo(null);
-			splashframe.setVisible(false);		
+			splashframe.setVisible(false);	
+			splashframe.dispose();			
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}	
@@ -554,10 +599,19 @@ public class Display{
 		if (playerName.length()<1){
 			playerName="Volodymyr Zelenskyy";
 		}
-		System.out.println("Player: "+playerName);
+		//System.out.println("Player: "+playerName);
 		player.setName(playerName);
 	}	
 		
+	public void resetGame(){
+		curIndex=0;    //reset iteration counter
+		player.setScore(0);
+		index=0;
+		randIndex=0;
+		//frame.dispose();
+	}	
+	
+	
 	
 		
 }

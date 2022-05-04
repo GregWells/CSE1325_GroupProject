@@ -40,13 +40,13 @@ public class Person{
     } 
 	public void correct() 
     { 
-		System.out.println("Score increment");
+		//System.out.println("Score increment");
 		score+=1;
         return; 		
     } 
 	public void incorrect() 
     { 
-		System.out.println("Score decrement");
+		//System.out.println("Score decrement");
 		score-=1;
         return; 		
     } 
