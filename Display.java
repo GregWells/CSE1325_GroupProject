@@ -1,3 +1,4 @@
+#As of 10PM on Tues
 import java.io.*;
 import java.util.*;
 import java.lang.NullPointerException;
@@ -496,7 +497,7 @@ public class Display{
 		JOptionPane.showMessageDialog(frame, m); //basic dialog 
 		return;
     }
-
+/*
 	public void showResult3(String m,JFrame frame, JPanel logoPanel) {
 		int TIME_VISIBLE=2500;
 		//JOptionPane.showMessageDialog(frame, m); //basic dialog 
@@ -525,7 +526,7 @@ public class Display{
 		return;
     }
 	
-/*	
+	
 	
 	public void showResult3(String m,JFrame frame, JPanel logoPanel) {
 		int TIME_VISIBLE=2500;
@@ -556,7 +557,7 @@ public class Display{
     }
 */	
 		public void showResultWithTimer(String m,JFrame frame, JPanel logoPanel) {
-			int TIME_VISIBLE=2000;
+			int TIME_VISIBLE=1000;
 			JOptionPane pane = new JOptionPane();
 			pane.setMessageType(JOptionPane.PLAIN_MESSAGE);
 			UIManager UI=new UIManager();
@@ -586,7 +587,7 @@ public class Display{
 			dialog.setVisible(true);
 		return;
     }
-	
+/*	
 	public void splashAlertBad() {	
 		//Show wrong answer pic
 		//badframe.setVisible(true);
@@ -618,7 +619,7 @@ public class Display{
 		
 		//goodframe.setVisible(false);
 	}
-	
+*/	
 	public void waitasec() {	
 		
 		try {
