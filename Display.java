@@ -4,6 +4,7 @@ import java.lang.NullPointerException;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.Timer;
 
 //import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
@@ -361,7 +362,7 @@ public class Display{
 			//System.out.println("User pressed GOOD button  curIndex:"+curIndex);
 			//System.out.println("randIndex:"+randIndex+ " logos[randIndex].isGood():"+logos[randIndex].isGood());   
 			if(logos[randIndex].isGood()){              // isGood() returns	
-				showResult("Correct");
+				showResultWithTimer("Correct",frame,logoPanel );
 				//goodframe.pack();
 				//goodframe.setVisible(true);
 				//waitasec();
@@ -369,7 +370,7 @@ public class Display{
 
 			}
 			else{
-				showResult("Wrong");
+				showResultWithTimer("Wrong",frame,logoPanel);
 				//badframe.pack();
 				//badframe.setVisible(true);
 				//waitasec();
@@ -387,7 +388,7 @@ public class Display{
 			//System.out.println("randIndex:"+randIndex+ " logos[randIndex].isGood():"+logos[randIndex].isGood());   
 
 			if( !(logos[randIndex].isGood()) ){
-				showResult("Correct");
+				showResultWithTimer("Correct",frame,logoPanel);
 				//goodframe.pack();
 				//goodframe.setVisible(true);
 				//waitasec();
@@ -395,7 +396,7 @@ public class Display{
 
 			}
 			else{
-				showResult("Wrong");
+				showResultWithTimer("Wrong",frame,logoPanel);
 				//badframe.pack();
 				//badframe.setVisible(true);
 				//waitasec();
@@ -496,6 +497,95 @@ public class Display{
 		return;
     }
 
+	public void showResult3(String m,JFrame frame, JPanel logoPanel) {
+		int TIME_VISIBLE=2500;
+		//JOptionPane.showMessageDialog(frame, m); //basic dialog 
+		
+		JButton button = new JButton("My Button");
+		frame.getContentPane().add(button);
+		
+		button.addActionListener(e -> {
+			//JOptionPane pane = new JOptionPane(m,JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane pane = new JOptionPane(m,JOptionPane.INFORMATION_MESSAGE);
+
+			//JOptionPane.showMessageDialog(frame, m);
+			//JOptionPane pane = new JOptionPane(m,JOptionPane.INFORMATION_MESSAGE);
+			JDialog dialog = pane.createDialog(null, "Title");
+			dialog.setModal(false);
+			dialog.setVisible(true);
+
+			new Timer(TIME_VISIBLE, new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					dialog.setVisible(false);
+				}
+			}).start();
+		});
+		frame.setVisible(true);
+		return;
+    }
+	
+/*	
+	
+	public void showResult3(String m,JFrame frame, JPanel logoPanel) {
+		int TIME_VISIBLE=2500;
+		JOptionPane pane = new  JOptionPane(m,JOptionPane.INFORMATION_MESSAGE); //basic dialog 
+		
+		//JButton button = new JButton("My Button");
+		//frame.getContentPane().add(button);
+		
+		pane.addActionListener(e -> {
+			//JOptionPane pane = new JOptionPane(m,JOptionPane.INFORMATION_MESSAGE);
+			//JOptionPane pane = new JOptionPane(m,JOptionPane.INFORMATION_MESSAGE);
+
+			//JOptionPane.showMessageDialog(frame, m);
+			//JOptionPane pane = new JOptionPane(m,JOptionPane.INFORMATION_MESSAGE);
+			JDialog dialog = pane.createDialog(null, "Title");
+			dialog.setModal(false);
+			dialog.setVisible(true);
+
+			new Timer(TIME_VISIBLE, new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					dialog.setVisible(false);
+				}
+			}).start();
+		});
+		frame.setVisible(true);
+		return;
+    }
+*/	
+		public void showResultWithTimer(String m,JFrame frame, JPanel logoPanel) {
+			int TIME_VISIBLE=2000;
+			JOptionPane pane = new JOptionPane();
+			pane.setMessageType(JOptionPane.PLAIN_MESSAGE);
+			UIManager UI=new UIManager();
+			if (m.equals("Wrong") ){
+				UI.put("Panel.background", Color.red);
+			}
+			else {
+				UI.put("Panel.background", Color.green);
+			}
+			
+			pane.setMessage("                         "+m);
+			JDialog dialog = pane.createDialog(null,m+" Answer");
+
+			// Set a timer
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						Thread.sleep(TIME_VISIBLE);
+					} catch (Exception e) {
+					}
+					dialog.dispose();
+				}
+
+			}).start();
+
+			dialog.setVisible(true);
+		return;
+    }
 	
 	public void splashAlertBad() {	
 		//Show wrong answer pic
