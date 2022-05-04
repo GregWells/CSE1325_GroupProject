@@ -88,7 +88,7 @@ public class Display{
 		
 		pic2Label = new JLabel();
 		
-		goodpicLabel = new JLabel();	
+/*		goodpicLabel = new JLabel();	
 		String imageName = ( "images/right.jpg");
 		try{
 			goodpicLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
@@ -105,7 +105,7 @@ public class Display{
 			System.out.println("Error 0002: failure to load: "+imageName);
 			e1.printStackTrace();
 		}
-		
+*/		
 		introPicLabel = new JLabel();	
 		imageName = ( "images/intro.jpg");
 		try{
@@ -284,7 +284,7 @@ public class Display{
 		player.setFinalScore(player.getScore());  // finalizes player score ; need getScore() accessor and setFinalScore() setter
 		///scoreLabel.setText("Score: "+player.getScore()+"/"+logos.size());
 		scoreLabel.setText("Score: "+player.getScore()+"/");
-
+		System.out.println("Score: "+player.getScore());
 		frame.add(scorePanel);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
@@ -302,6 +302,7 @@ public class Display{
 		//"hit 'good' for if the company is in the support for Ukraine, hit 'bad' if otherwise"
 		//"and don't forget to have fun!!!"
 		instructLabel = new JLabel();
+		instructLabel.setFont(new Font("Serif", Font.PLAIN, 18));
 		instructLabel.setText("<html>Instructions: <br>This is a game meant to quiz your knowledge<br>on whether the following companies are aiding in the effort to support Ukraine<br>hit 'good' for if the company is in the support for Ukraine, hit 'bad' if otherwise<br>and don't forget to have fun!!!</html>");
 		instructLabel.setVerticalAlignment(SwingConstants.CENTER); //Jared: Haven't figureed out how to center text yet.
 		instructLabel.setForeground(Color.WHITE);
