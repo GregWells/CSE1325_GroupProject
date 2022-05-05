@@ -558,7 +558,9 @@ public class Display{
     }
 	
 	public void showResultWithTimer(String m,JFrame frame, JPanel logoPanel) {
+
 			int TIME_VISIBLE=1500;
+
 			JOptionPane pane = new JOptionPane();
 			pane.setMessageType(JOptionPane.PLAIN_MESSAGE);
 			UIManager UI=new UIManager();
