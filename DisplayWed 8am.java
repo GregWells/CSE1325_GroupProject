@@ -1,5 +1,4 @@
-import usefulstuff.*; 
-
+//As of 11:15PM on Tues
 import java.io.*;
 import java.util.*;
 import java.lang.NullPointerException;
@@ -13,8 +12,9 @@ import java.nio.file.*;
 
 public class Display{
 	private JFrame frame, splashframe, badframe, goodframe;
-	private JLabel titleLabel, instructLabel, scoreLabel, askLabel, picLabel, pic2Label,finalPicLabel,introPicLabel,leadLabel;
-	private  JPanel titlePanel, instructPaneltop, instructPanelcen, instructPanelbot, logoPanel, scorePanel, askPanel, alertPanel, splashPanel,goodPanel, badPanel, botBarPanel;
+	private JLabel titleLabel, instructLabel, scoreLabel, askLabel, picLabel, pic2Label,goodpicLabel,badpicLabel,introPicLabel;
+	private JPanel titlePanel, instructPaneltop, instructPanelcen, instructPanelbot, scorePanel, askPanel, alertPanel, splashPanel;
+	private JPanel logoPanel, topLogoPanel, botLogoPanel;
 	private JButton playButton, exitButton, againButton, startButton, goodButton, badButton, yesButton, noButton;
 	
     ///ArrayList<Logo> logos;
@@ -26,10 +26,8 @@ public class Display{
 	int maxImages=50;
 	String company;
 	String logoFilename;	
-	String leaderboardFilename="leaderboard.csv";
-	boolean result=false;
+	
 	String companyFile="companies.csv";
-	String progName="Company Accountability Program for Ukraine";
 	static int logoCount=0;
 	int index=0;
 	double numLines=0;
@@ -51,7 +49,7 @@ public class Display{
 		curIndex = 0;
 		
 		//define frame parameters
-		frame = new JFrame(progName);
+		frame = new JFrame("Company Accountability Program for Ukraine");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1000,1000);
 		frame.setLayout(new GridLayout(1,1));
@@ -65,14 +63,25 @@ public class Display{
 		//define panels that will be placed on the frame
 		titlePanel = new JPanel();
 		instructPanelcen = new JPanel();
-		logoPanel = new JPanel();  
+		JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		topLogoPanel = new JPanel(); 
+		botLogoPanel = new JPanel(); 
 		scorePanel = new JPanel();
 		askPanel = new JPanel();
-		alertPanel = new JPanel();
+		//alertPanel = new JPanel();
 		splashPanel = new JPanel();
-	    goodPanel = new JPanel();
-		badPanel = new JPanel();
-		botBarPanel= new JPanel();
+	    //goodPanel = new JPanel();
+		//badPanel = new JPanel();
+
+
+
+
+
+
+
+
+
+
 		
 		splashSlava();  //Show opening splash screen with Ukrainian flag
 		
@@ -84,7 +93,6 @@ public class Display{
 		askLabel.setVerticalAlignment(JLabel.TOP);
 
 		scoreLabel = new JLabel("Score: ");
-		leadLabel = new JLabel("Score Leader: ");
 		//scoreLabel.setText("Score: "+player.getScore());
 
 		titleLabel = new JLabel("", JLabel.CENTER);
@@ -92,7 +100,25 @@ public class Display{
 		titleLabel.setVerticalAlignment(JLabel.TOP);
 		
 		pic2Label = new JLabel();
-			
+		
+/*		goodpicLabel = new JLabel();	
+		String imageName = ( "images/right.jpg");
+		try{
+			goodpicLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
+		} catch (Exception e1) {
+			System.out.println("Error 0001: failure to load: "+imageName);
+			e1.printStackTrace();
+		}
+
+		badpicLabel = new JLabel();	
+		imageName = ( "images/wrong.png");
+		try{
+			badpicLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
+		} catch (Exception e1) {
+			System.out.println("Error 0002: failure to load: "+imageName);
+			e1.printStackTrace();
+		}
+*/		
 		introPicLabel = new JLabel();	
 		String imageName = ( "images/intro.jpg");
 		try{
@@ -101,23 +127,6 @@ public class Display{
 			System.out.println("Error 0003: failure to load: "+imageName);
 			e1.printStackTrace();
 		}
-		
-
-
-		//introPicLabel.setLayout( new GridBagLayout() );
-		//introPicLabel.add(startButton, new GridBagConstraints());
-		
-		//image for the score screen  
-		finalPicLabel = new JLabel();	
-		imageName = ( "images/impact.jpg");
-		try{
-			finalPicLabel.setIcon( new ImageIcon(ImageIO.read( new File(imageName) ) ) );
-		} catch (Exception e1) {
-			System.out.println("Error 0004: failure to load: "+imageName);
-			e1.printStackTrace();
-		}
-		
-
 		
 		exitButton = new JButton("Exit");
 		exitButton.addActionListener(new ExitActionListener());
@@ -145,48 +154,79 @@ public class Display{
 
 
 		//add the buttons and labels to the appropriate panels
-
+		//titlePanel.add(titleLabel);
+		//titlePanel.add(startButton);
+		
+		
 		titlePanel.add(introPicLabel);
 		
 		introPicLabel.setLayout( new GridBagLayout() );
 		introPicLabel.add(startButton, new GridBagConstraints());
 
-		//introPicLabel.add(startButton);
-//		titlePanel.add(exitButton);
+		//introPicLabel.add(startButton);   intro
+		titlePanel.add(exitButton);
+
+		//add two sub logoPanels (topLogoPanel & botLogoPanel) to logoPanel 
+		//logoPanel.setLayout(new GridLayout(2,1));
+        //logoPanel.add(topLogoPanel, BorderLayout.NORTH);
+		//logoPanel.add(botLogoPanel, BorderLayout.SOUTH);
+		
+		//JPanel main = new JPanel( new FlowLayout(FlowLayout.CENTER, 0, 0) );
+
+		//JPanel panel1 = new JPanel();
+		//botLogoPanel.setPreferredSize( new Dimension(200, 200) );
+		//scoreLabel.add( new JButton() );
+		//scoreLabel.setText("Score: "+player.getScore());
+		//scoreLabel.setBounds(1, 800 );
+		//botLogoPanel.add(scoreLabel);
+		//logoPanel.add( botLogoPanel );
+		
+		//topLogoPanel.setPreferredSize( new Dimension(800, 800) );
+		//topLogoPanel.add( new JButton() );
+		//logoPanel.add( topLogoPanel );
+
+		//the first number is the number of rows, the second is the number of columns
+		scoreLabel.add( new JButton("Click here!") );
+		scoreLabel.setText("Score: "+player.getScore());
+		botLogoPanel.add(scoreLabel);
+		//logoPanel.setLayout(new GridLayout(2, 1));
+		logoPanel.add(topLogoPanel);
+		logoPanel.add(botLogoPanel);
+		frame.add(logoPanel,BorderLayout.CENTER);
+		System.out.println("Frame:"+frame.getContentPane());
+		
+		//JPanel panel2 = new JPanel();
 
 
+		//frame.add( main );
 		
 		//logoPanel.add(goodButton);    //move the good/bad buttons onto the picLabel
 		//logoPanel.add(badButton);
 		
-		//scoreLabel.setBounds(1, 1, 100, 100);
-		//picLabel.add(scoreLabel);
+		
+		
 		
 		picLabel.add(goodButton);
 		picLabel.add(badButton);
 		goodButton.setBounds(50, 50, 200, 60);   //JButton.setBounds(x,y,w,h)
 		badButton.setBounds(350, 50, 200, 60);   //JButton.setBounds(x,y,w,h)
-		goodButton.setBackground(Color.LIGHT_GRAY);	
-		goodButton.setFont(new Font("Arial", Font.BOLD, 18));
-		badButton.setBackground(Color.LIGHT_GRAY);
-		badButton.setFont(new Font("Arial", Font.BOLD, 18));
-		//picLabel.add(scoreLabel);
-		logoPanel.add(picLabel);
-		//botBarPanel.add(scoreLabel);
+		goodButton.setBackground(Color.GREEN);	
+		badButton.setBackground(Color.RED);
+		
+		topLogoPanel.add(picLabel);
+		
 		
 
-		//scorePanel.add(scoreLabel);
-		//scorePanel.add(againButton);
-		//scorePanel.add(exitButton);
-		
-		
-		
+
+		scorePanel.add(scoreLabel);
+		scorePanel.add(againButton);
+		scorePanel.add(exitButton);
 
 		askPanel.add(askLabel);
 		askPanel.add(yesButton);
 		askPanel.add(noButton);
 
-		alertPanel.add(pic2Label);
+		//alertPanel.add(pic2Label);
 		
 		//goodPanel.add(goodpicLabel);
 		//badPanel.add(badpicLabel);
@@ -206,9 +246,14 @@ public class Display{
 		if (curIndex<loops){ 
 			//frame.remove(instructPanel);  //redundant
 			frame.setVisible(false);
-			frame.add(logoPanel);
-			frame.setTitle(player.getName()+"   Score: "+player.getScore() +"     Guess "+curIndex+" of "+loops);
-			
+			//logoPanel.remove(topLogoPanel);
+			//logoPanel.remove(botLogoPanel);
+			//logoPanel.setLayout(new GridLayout(2, 1));
+			//logoPanel.add(topLogoPanel);
+			//logoPanel.add(botLogoPanel);
+			frame.add(logoPanel,BorderLayout.CENTER);
+			//frame.add(logoPanel);
+		System.out.println("Frame:"+frame.getContentPane());
 			//frame.add(botBarPanel);
 
 			curIndex+=1;
@@ -229,10 +274,10 @@ public class Display{
 				goodButton.setActionCommand("GOOD");
 				badButton.setActionCommand("BAD");
 				//frame.add(logoPanel); 
-				frame.getContentPane().validate();
-				frame.getContentPane().repaint();
-				frame.pack();
-				frame.setLocationRelativeTo(null);
+	//			frame.getContentPane().validate();
+	//			frame.getContentPane().repaint();
+	//			frame.pack();
+	//			frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 
 			
@@ -251,7 +296,7 @@ public class Display{
 		else{			
 			frame.setVisible(false);
 			frame.remove(logoPanel);
-			scoreLabel.setText(player.getName()+"   Score: "+player.getScore());
+			scoreLabel.setText("Score: "+player.getScore());
 			displayScore();
 			frame.add(scorePanel);
 			frame.setLocationRelativeTo(null);
@@ -302,44 +347,15 @@ public class Display{
 
 	public void displayScore(){
 		frame.remove(logoPanel);
-		
-		//scorePanel.add(scoreLabel);
-		//scorePanel.add(againButton);
-		//scorePanel.add(exitButton);
-		//scorePanel.remove(scoreLabel);
-		//scorePanel.remove(againButton);
-		//scorePanel.remove(exitButton);		
-		
-		
-		frame.setTitle(progName);
-		//save this score to the leaderboard csv file
-		writeResult( leaderboardFilename, player.getName(), player.getScore());
 		player.setFinalScore(player.getScore());  // finalizes player score ; need getScore() accessor and setFinalScore() setter
 		///scoreLabel.setText("Score: "+player.getName()+"   "+player.getScore()+"/"+logos.size());
-		//System.out.println("Leader:  "+showLeaderboard( leaderboardFilename));
-		
-		scoreLabel.setFont(new Font("Arial", Font.BOLD, 24));
+
+		scoreLabel.setFont(new Font("Arial", Font.PLAIN, 35));
 		scoreLabel.setText("Score: "+player.getName()+"   "+player.getScore()+" ");
 		scoreLabel.setForeground(Color.BLACK);
-		scorePanel.add(finalPicLabel);
-		
-		leadLabel.setFont(new Font("Arial", Font.BOLD, 30));
-		leadLabel.setText("Leaderboard Top Score: "+showLeaderboard( leaderboardFilename));
-		leadLabel.setForeground(Color.BLUE);
-		finalPicLabel.add(leadLabel);
-		
-		//finalPicLabel.setLayout( new GridBagLayout() );
-		finalPicLabel.setLayout( new FlowLayout(FlowLayout.CENTER, 200,10) );
-		//finalPicLabel.add(againButton, new GridBagConstraints());
-		finalPicLabel.add(againButton);
-		finalPicLabel.add(scoreLabel);
-		finalPicLabel.add(exitButton);
 
-		scorePanel.add(finalPicLabel);
-				
 		frame.add(scorePanel);
 		frame.setLocationRelativeTo(null);
-		frame.pack();
 		frame.setVisible(true);
 	}
 	
@@ -357,9 +373,7 @@ public class Display{
 		//"and don't forget to have fun!!!"
 		instructLabel = new JLabel();
 		instructLabel.setFont(new Font("Serif", Font.PLAIN, 18));
-		//instructLabel.setText("<html>Instructions: <br><br>This is a game meant to quiz your knowledge<br>on whether the following companies are aiding in the effort to support Ukraine<br>hit 'good' for if the company is in the support for Ukraine, hit 'bad' if otherwise<br>and don't forget to have fun!!!</html>");
-		instructLabel.setText("<html><br>Instructions:<br><br>This is a game meant to quiz your knowledge on whether certain <br> companies have taken steps to cease business activities in Russia<br> in support of Ukraine or are continuing their business activities with Russia.<br>Hit 'good' if the company is supporting Ukraine by ceasing Russian operations,<br> or hit 'bad' if the company is pursuing business as usual in Russia. <br></html>");
-
+		instructLabel.setText("<html>Instructions: <br>This is a game meant to quiz your knowledge<br>on whether the following companies are aiding in the effort to support Ukraine<br>hit 'good' for if the company is in the support for Ukraine, hit 'bad' if otherwise<br>and don't forget to have fun!!!</html>");
 		instructLabel.setVerticalAlignment(SwingConstants.CENTER); //Jared: Haven't figureed out how to center text yet.
 		instructLabel.setForeground(Color.WHITE);
 
@@ -469,17 +483,15 @@ public class Display{
 			frame.setVisible(false);
 			frame.add(logoPanel);
 			frame.setLocationRelativeTo(null);
-			//frame.setVisible(true);
+			frame.setVisible(true);
 			//System.out.println("Got here: NoActionListener");
 			resetGame();
-			
-			displayLogo();
-			//frame.add(logoPanel);
+			frame.add(logoPanel);
 			
 			
 			
-			//frame.setLocationRelativeTo(null);
-			//frame.setVisible(true);
+			frame.setLocationRelativeTo(null);
+			frame.setVisible(true);
 		}
 	}
 
@@ -494,7 +506,7 @@ public class Display{
 			//"hit 'good' for if the company is in the support for Ukraine, hit 'bad' if otherwise"
 			//"and don't forget to have fun!!!"
 			instructLabel = new JLabel();
-			instructLabel.setText("<html>Instructions: <br>This is a game meant to quiz your knowledge on whether certain <br> companies have taken steps to cease business activities in Russia <br> or are continuing their business activities with Russia in support of Ukraine. <br>hit 'good' if the company is supporting Ukraine by ceasing Russian operations,<br> or hit 'bad' if the company is pursuing business as usual in Russia. <br></html>");
+			instructLabel.setText("<html>Instructions: <br>This is a game meant to quiz your knowledge<br>on whether the following companies are aiding in the effort to support Ukraine<br>hit 'good' for if the company is in the support for Ukraine, hit 'bad' if otherwise<br>and don't forget to have fun!!!</html>");
 			instructLabel.setVerticalAlignment(SwingConstants.CENTER); //Jared: Haven't figureed out how to center text yet.
 			instructLabel.setForeground(Color.WHITE);
 	
@@ -558,9 +570,7 @@ public class Display{
     }
 	
 	public void showResultWithTimer(String m,JFrame frame, JPanel logoPanel) {
-
 			int TIME_VISIBLE=1500;
-
 			JOptionPane pane = new JOptionPane();
 			pane.setMessageType(JOptionPane.PLAIN_MESSAGE);
 			UIManager UI=new UIManager();
@@ -633,7 +643,7 @@ public class Display{
 		if (playerName.length()<1){
 			playerName="Volodymyr Zelenskyy";
 		}
-		//System.out.println("Player: "+playerName);
+		System.out.println("Player: "+playerName);
 		player.setName(playerName);
 	}	
 		
@@ -645,62 +655,7 @@ public class Display{
 		//frame.dispose();
 	}	
 	
-	public void writeResult(String filename, String name, int score){
-		try { 
-						File leaderboardFile = new File(filename); 
-						Scanner outFile= new Scanner(leaderboardFile);
-						String dataLine=(Integer.toString(score)+","+name+"\n");
-						result=Useful.write( dataLine, filename);
-						//System.out.println("Wrote : "+name+" score:"+score +"to file:"+filename);
-						
-					}
-					catch (Exception e) {
-						System.out.println("Error writing to: "+filename);
-						}
 	
-		return;
-	}
 	
-	public String showLeaderboard(String filename){
-		int highScore=-99;
-		int highScoreIndex=0;
-		int score[]=new int[200];
-		String name[]= new String[200];
-		String resultString="";
-		int counter=0;
-		try { 
-			File myObj = new File(filename); 
-			Scanner inFile= new Scanner(myObj);  
-			
-			while (inFile.hasNextLine()){
-				//
-				String info= inFile.nextLine(); 
-				///System.out.println(info);
-
-				String []line=info.split(","); //split with comma delimiter
-				
-				score[counter]=Integer.parseInt(line[0]); 
-				name[counter]=line[1];
-				
-				///System.out.println("Score: "+score[counter]);
-				
-				///System.out.println("Score: "+score[counter]+"    "+name[counter]);
-
-				if (score[counter]>highScore){
-					highScore=score[counter];
-					highScoreIndex=counter;
-				}
-				counter++;	
-				
-			}	
-		///System.out.println("High:"+highScore + "   "+name[highScoreIndex]);					
-		}
-		catch (Exception e) { //report exception here 
-			//System.out.println("Here is what happened: "+e); 
-			///System.out.println("High:"+highScore + "   "+name[highScoreIndex]);
-			resultString=(Integer.toString(highScore)+"   "+name[highScoreIndex]);
-		} 
-		resultString=(Integer.toString(highScore)+"   "+name[highScoreIndex]);
-		return (resultString);
-	}		
+		
 }
